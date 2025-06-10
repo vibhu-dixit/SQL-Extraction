@@ -1,5 +1,3 @@
 pytesseract
-opencv-python
-gym
-stable-baselines3
-numpy
+opencv-python-headless
+scikit-learn
