@@ -1,0 +1,33 @@
+ERROR ANALYSIS DETAILED REPORT
+==================================================
+
+File: outputs/gov_agencies.txt
+Total Questions: 24
+Correct Results: 1
+Accuracy: 4.2%
+
+ERROR TYPES:
+  Empty Results: 15
+  Rate Limiting: 13
+  API Errors: 7
+  Wrong Answer: 7
+  SQL Errors: 7
+  Fallback SQL Used: 2
+
+SQL ERRORS:
+  no such table: unknown_table: 2
+  Table not found: unknown_table: 2
+  no such table: Department_of_the_Prime_Minister_and_Cabinet__Australia: 1
+  Table not found: Department_of_the_Prime_Minister_and_Cabinet__Australia: 1
+  no such table: Australian_Ministers_for_Women: 1
+  Table not found: Australian_Ministers_for_Women: 1
+  no such table: Ministry_of_Defence__India: 1
+  Table not found: Ministry_of_Defence__India: 1
+  no such table: Department_of_the_Prime_Minister_and_Cabinet_: 1
+  Table not found: Department_of_the_Prime_Minister_and_Cabinet_: 1
+  no such table: Ministry_of_Defence_: 1
+  Table not found: Ministry_of_Defence_: 1
+
+RATE LIMITING:
+  Rate Limited: 13
+  API Error 400: 7

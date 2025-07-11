@@ -1,0 +1,1898 @@
+Testing cyclist domain with 50 questions...
+============================================================
+Available tables: ['Luc_Leblanc', 'Tina_Pic', 'Chris_Hoy', 'Tom_Boonen', 'Alejandro_Valverde']... (showing first 5)
+Total tables: 45
+
+--- Question 1/50 ---
+Entity/Table: Rudi_Altig
+Question: Which year did Rudi_Altig won the first medal?
+Expected: 1965
+Detected Pattern: 1
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 1: Single Year Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cyclist
+- Data Types: 3 numeric, 23 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Rudi_Altig" columns: id, birth_date, birth_place, currentteam, death_date, death_place, discipline, fullname, majorwins, medaltemplates, name, proteam1, proteam2, proteam3, proteam4, proteam5, proteam6, proteam7, proyears1, proyears2, proyears3, proyears4, proyears5, proyears6, proyears7, ridertype, role, timestamp
+
+Question: Which year did Rudi_Altig won the first medal?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+API Test: SELECT NULL
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/1 = 0.0%
+----------------------------------------
+
+--- Question 2/50 ---
+Entity/Table: Sean_Kelly_(cyclist)
+Question: How many years did Sean_Kelly_(cyclist) played for V. C Metz-Woippy?
+Expected: 1
+Detected Pattern: 1
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 1: Single Year Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cyclist
+- Data Types: 6 numeric, 35 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Sean_Kelly_(cyclist)" columns: id, amateurteam1, amateuryears1, birth_date, birth_place, country, currentteam, dateofbirth, discipline, fullname, height, image_caption, majorwins, medaltemplates, name, nickname, proteam1, proteam10, proteam2, proteam3, proteam4, proteam5, proteam6, proteam7, proteam8, proteam9, proteams, proyears, proyears1, proyears10, proyears2, proyears3, proyears4, proyears5, proyears6, proyears7, proyears8, proyears9, ridername, ridertype, role, timestamp, weight
+
+Question: How many years did Sean_Kelly_(cyclist) played for V. C Metz-Woippy?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/2 = 0.0%
+----------------------------------------
+
+--- Question 3/50 ---
+Entity/Table: Ivan_Basso
+Question: For which pro/amateur team did Ivan_Basso played the least number for years?
+Expected: SAX
+Detected Pattern: 1
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 1: Single Year Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cyclist
+- Data Types: 5 numeric, 39 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Ivan_Basso" columns: id, amateurteam1, amateurteams, amateuryears, amateuryears1, birth_date, birth_place, country, currentteam, dateofbirth, discipline, fullname, height, image_caption, majorwins, manageteam1, manageteam2, manageyars1, manageyears1, manageyears2, name, nickname, placeofbirth, proteam1, proteam2, proteam3, proteam4, proteam5, proteam6, proteam7, proteam8, proteams, proyears, proyears1, proyears2, proyears3, proyears4, proyears5, proyears6, proyears7, proyears8, ridername, ridertype, role, timestamp, weight
+
+Question: For which pro/amateur team did Ivan_Basso played the least number for years?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/3 = 0.0%
+----------------------------------------
+
+--- Question 4/50 ---
+Entity/Table: Paul_Sherwen
+Question: How many years did Paul_Sherwen played for Raleigh - Weinmann?
+Expected: 1
+Detected Pattern: 1
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 1: Single Year Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cyclist
+- Data Types: 6 numeric, 19 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Paul_Sherwen" columns: id, amateurteam1, amateuryears1, birth_date, birth_place, death_date, death_place, discipline, fullname, majorwins, name, nickname, proteam1, proteam2, proteam3, proteam4, proteam5, proteam6, proyears1, proyears2, proyears3, proyears4, proyears5, proyears6, ridertype, role, timestamp
+
+Question: How many years did Paul_Sherwen played for Raleigh - Weinmann?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/4 = 0.0%
+----------------------------------------
+
+--- Question 5/50 ---
+Entity/Table: Chris_Hoy
+Question: Which year did Chris_Hoy won the first medal?
+Expected: 1999
+Detected Pattern: 1
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 1: Single Year Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cyclist
+- Data Types: 3 numeric, 22 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Chris_Hoy" columns: id, amateurteam_s_, amateurteams, amateuryears, birth_date, birth_place, country, currentteam, dateofbirth, discipline, fullname, fullname_____________bold_text_________bold_text_________bold_text_____italic_text___________, image_caption, location, medaltemplates, name, nationality, nickname, placeofbirth, proteams, proyears, ridername, ridertype, role, timestamp, weight, __amateuryears
+
+Question: Which year did Chris_Hoy won the first medal?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/5 = 0.0%
+----------------------------------------
+
+--- Question 6/50 ---
+Entity/Table: Lyne_Bessette
+Question: How many years did Lyne_Bessette played more for Saturn Cycling Team compared to SLU?
+Expected: 4
+Detected Pattern: 1
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 1: Single Year Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cyclist
+- Data Types: 2 numeric, 21 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Lyne_Bessette" columns: id, birth_date, birth_place, children, currentteam, discipline, fullname, honorific_suffix, medaltemplates, name, parliament, party, predecessor, profession, proteam1, proteam2, proyears1, proyears2, residence, riding, role, successor, term_end, term_start, timestamp
+
+Question: How many years did Lyne_Bessette played more for Saturn Cycling Team compared to SLU?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+No SQL found in response
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/6 = 0.0%
+----------------------------------------
+
+--- Question 7/50 ---
+Entity/Table: Roland_Green_(cyclist)
+Question: How many pro/amateur teams did Roland_Green_(cyclist) played for more than 1 years?
+Expected: 0
+Detected Pattern: 1
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 1: Single Year Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cyclist
+- Data Types: 5 numeric, 14 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Roland_Green_(cyclist)" columns: id, birth_date, birth_place, country, dateofbirth, discipline, fullname, majorwins, medaltemplates, name, proteam1, proteam2, proteam3, proteams, proyears, proyears1, proyears2, proyears3, ridername, role, timestamp
+
+Question: How many pro/amateur teams did Roland_Green_(cyclist) played for more than 1 years?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/7 = 0.0%
+----------------------------------------
+
+--- Question 8/50 ---
+Entity/Table: Roger_Walkowiak
+Question: How many years did Roger_Walkowiak played for Saint-Raphael-Geminiani?
+Expected: 1
+Detected Pattern: 1
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 1: Single Year Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cyclist
+- Data Types: 9 numeric, 19 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Roger_Walkowiak" columns: id, birth_date, birth_place, country, currentteam, dateofbirth, death_date, discipline, fullname, majorwins, name, nickname, proteam1, proteam2, proteam3, proteam4, proteam5, proteam6, proteams, proyears, proyears1, proyears2, proyears3, proyears4, proyears5, proyears6, ridername, ridertype, role, timestamp
+
+Question: How many years did Roger_Walkowiak played for Saint-Raphael-Geminiani?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+No SQL found in response
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/8 = 0.0%
+----------------------------------------
+
+--- Question 9/50 ---
+Entity/Table: Pedro_Delgado
+Question: How many years did Pedro_Delgado played more for Seat-Orbea compared to Reynolds?
+Expected: 0
+Detected Pattern: 1
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 1: Single Year Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cyclist
+- Data Types: 3 numeric, 18 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Pedro_Delgado" columns: id, birth_date, birth_place, currentteam, discipline, fullname, height, landscape, majorwins, name, nickname, proteam1, proteam2, proteam3, proteam4, proyears1, proyears2, proyears3, proyears4, ridertype, role, timestamp, weight
+
+Question: How many years did Pedro_Delgado played more for Seat-Orbea compared to Reynolds?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/9 = 0.0%
+----------------------------------------
+
+--- Question 10/50 ---
+Entity/Table: Cadel_Evans
+Question: Which year did Cadel_Evans won most medals?
+Expected: 2002
+Detected Pattern: 1
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 1: Single Year Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cyclist
+- Data Types: 2 numeric, 25 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Cadel_Evans" columns: id, , amateurteams, amateuryears, birth_date, birth_place, boridername, country, currentteam, dateofbirth, discipline, fullname, height, image_caption, institueteams, majorwins, medaltemplates, name, nickname, placeofbirth, proteams, proyears, ridername, ridertype, role, spouse, timestamp, website, weight
+
+Question: Which year did Cadel_Evans won most medals?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/10 = 0.0%
+----------------------------------------
+
+--- Question 11/50 ---
+Entity/Table: Rudi_Altig
+Question: How many more medals did Rudi_Altig won in 1965 compared to 1966?
+Expected: 0
+Detected Pattern: 1
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 1: Single Year Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cyclist
+- Data Types: 3 numeric, 23 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Rudi_Altig" columns: id, birth_date, birth_place, currentteam, death_date, death_place, discipline, fullname, majorwins, medaltemplates, name, proteam1, proteam2, proteam3, proteam4, proteam5, proteam6, proteam7, proyears1, proyears2, proyears3, proyears4, proyears5, proyears6, proyears7, ridertype, role, timestamp
+
+Question: How many more medals did Rudi_Altig won in 1965 compared to 1966?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/11 = 0.0%
+----------------------------------------
+
+--- Question 12/50 ---
+Entity/Table: Theo_Bos
+Question: Which year did Theo_Bos won the first bronze medal?
+Expected: 2004
+Detected Pattern: 1
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 1: Single Year Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cyclist
+- Data Types: 6 numeric, 20 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Theo_Bos" columns: id, amateurteam1, amateuryears1, birth_date, birth_place, currentteam, discipline, disciplines, fullname, height, medaltemplates, name, proteam1, proteam2, proteam3, proteam4, proteam5, proteams, proyears, proyears1, proyears2, proyears3, proyears4, proyears5, ridertype, role, timestamp, weight
+
+Question: Which year did Theo_Bos won the first bronze medal?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/12 = 0.0%
+----------------------------------------
+
+--- Question 13/50 ---
+Entity/Table: David_Zabriskie
+Question: Did David_Zabriskie won 1 bronze medals? (True/False)
+Expected: True
+Detected Pattern: 1
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 1: Single Year Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cyclist
+- Data Types: 2 numeric, 18 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "David_Zabriskie" columns: id, birth_date, birth_place, country, currentteam, dateofbirth, discipline, fullname, height, image_caption, majorwins, medaltemplates, name, nickname, placeofbirth, proteams, proyears, ridername, ridertype, role, timestamp, weight
+
+Question: Did David_Zabriskie won 1 bronze medals? (True/False)
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/13 = 0.0%
+----------------------------------------
+
+--- Question 14/50 ---
+Entity/Table: Shane_Kelly
+Question: Which year did Shane_Kelly won the first bronze medal?
+Expected: 1994
+Detected Pattern: 1
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 1: Single Year Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cyclist
+- Data Types: 1 numeric, 13 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Shane_Kelly" columns: id, amateurteams, country, dateofbirth, discipline, fullname, height, image_caption, majorwins, medaltemplates, proteams, proyears, ridername, role, timestamp, weight
+
+Question: Which year did Shane_Kelly won the first bronze medal?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/14 = 0.0%
+----------------------------------------
+
+--- Question 15/50 ---
+Entity/Table: Paolo_Bettini
+Question: Did Paolo_Bettini won 3 bronze medals? (True/False)
+Expected: False
+Detected Pattern: 1
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 1: Single Year Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cyclist
+- Data Types: 1 numeric, 15 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Paolo_Bettini" columns: id, country, currentteam, dateofbirth, discipline, fullname, height, image_caption, majorwins, medaltemplates, nickname, proteams, proyears, ridername, ridertype, role, timestamp, weight
+
+Question: Did Paolo_Bettini won 3 bronze medals? (True/False)
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/15 = 0.0%
+----------------------------------------
+
+--- Question 16/50 ---
+Entity/Table: Alejandro_Valverde
+Question: How many medals did Alejandro_Valverde had till 2014 including 2014?
+Expected: 6
+Detected Pattern: 8
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 8: Cumulative Till Year
+
+DOMAIN ANALYSIS:
+- Domain Type: cyclist
+- Data Types: 2 numeric, 24 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Alejandro_Valverde" columns: id, birth_date, birth_place, country, currentteam, dateofbirth, discipline, fullname, height, image_caption, majorwins, medaltemplates, name, nickname, placeofbirth, proteam1, proteam2, proteam3, proteams, proyears, proyears1, proyears2, proyears3, ridername, ridertype, role, timestamp, weight
+
+Question: How many medals did Alejandro_Valverde had till 2014 including 2014?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/16 = 0.0%
+----------------------------------------
+
+--- Question 17/50 ---
+Entity/Table: Marco_Pantani
+Question: How many pro/amateur teams did Marco_Pantani played for more than 1 years?
+Expected: 3
+Detected Pattern: 1
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 1: Single Year Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cyclist
+- Data Types: 3 numeric, 19 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Marco_Pantani" columns: id, amateurteam1, amateurteam2, amateuryears1, amateuryears2, birth_date, birth_place, death_date, death_place, discipline, fullname, height, majorwins, medaltemplates, name, nickname, proteam1, proteam2, proyears1, proyears2, ridertype, role, timestamp, weight
+
+Question: How many pro/amateur teams did Marco_Pantani played for more than 1 years?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/17 = 0.0%
+----------------------------------------
+
+--- Question 18/50 ---
+Entity/Table: Serhiy_Honchar
+Question: How many more medals did Serhiy_Honchar won in 1997 compared to 2000?
+Expected: 0
+Detected Pattern: 1
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 1: Single Year Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cyclist
+- Data Types: 2 numeric, 16 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Serhiy_Honchar" columns: id, birth_date, birth_place, country, currentteam, dateofbirth, discipline, fullname, height, image_caption, majorwins, medaltemplates, name, proteams, proyears, ridername, ridertype, role, timestamp, weight
+
+Question: How many more medals did Serhiy_Honchar won in 1997 compared to 2000?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/18 = 0.0%
+----------------------------------------
+
+--- Question 19/50 ---
+Entity/Table: Rudi_Altig
+Question: How many medals did Rudi_Altig had till 1965 including 1965?
+Expected: 2
+Detected Pattern: 8
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 8: Cumulative Till Year
+
+DOMAIN ANALYSIS:
+- Domain Type: cyclist
+- Data Types: 3 numeric, 23 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Rudi_Altig" columns: id, birth_date, birth_place, currentteam, death_date, death_place, discipline, fullname, majorwins, medaltemplates, name, proteam1, proteam2, proteam3, proteam4, proteam5, proteam6, proteam7, proyears1, proyears2, proyears3, proyears4, proyears5, proyears6, proyears7, ridertype, role, timestamp
+
+Question: How many medals did Rudi_Altig had till 1965 including 1965?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/19 = 0.0%
+----------------------------------------
+
+--- Question 20/50 ---
+Entity/Table: Luc_Leblanc
+Question: Which year did Luc_Leblanc won the first gold medal?
+Expected: 1994
+Detected Pattern: 1
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 1: Single Year Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cyclist
+- Data Types: 4 numeric, 17 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Luc_Leblanc" columns: id, birth_date, birth_place, currentteam, discipline, fullname, majorwins, medaltemplates, name, proteam1, proteam2, proteam3, proteam4, proteam5, proteam6, proyears1, proyears2, proyears3, proyears4, proyears5, proyears6, role, timestamp
+
+Question: Which year did Luc_Leblanc won the first gold medal?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/20 = 0.0%
+----------------------------------------
+
+--- Question 21/50 ---
+Entity/Table: Lars_Michaelsen
+Question: How many years did Lars_Michaelsen played for Team CSC?
+Expected: 1
+Detected Pattern: 1
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 1: Single Year Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cyclist
+- Data Types: 3 numeric, 24 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Lars_Michaelsen" columns: id, birth_date, birth_place, country, currentteam, dateofbirth, discipline, fullname, height, majorwins, name, proteam1, proteam2, proteam3, proteam4, proteam5, proteam6, proteams, proyears, proyears1, proyears2, proyears3, proyears4, proyears5, proyears6, ridername, role, timestamp, weight
+
+Question: How many years did Lars_Michaelsen played for Team CSC?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/21 = 0.0%
+----------------------------------------
+
+--- Question 22/50 ---
+Entity/Table: Vittorio_Adorni
+Question: How many medals did Vittorio_Adorni had till 1968 including 1968?
+Expected: 2
+Detected Pattern: 8
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 8: Cumulative Till Year
+
+DOMAIN ANALYSIS:
+- Domain Type: cyclist
+- Data Types: 6 numeric, 19 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Vittorio_Adorni" columns: id, birth_date, birth_place, currentteam, death_date, death_place, discipline, fullname, majorwins, medaltemplates, name, proteam1, proteam2, proteam3, proteam4, proteam5, proteam6, proteam7, proyears1, proyears2, proyears3, proyears4, proyears5, proyears6, proyears7, role, timestamp
+
+Question: How many medals did Vittorio_Adorni had till 1968 including 1968?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/22 = 0.0%
+----------------------------------------
+
+--- Question 23/50 ---
+Entity/Table: Vittorio_Adorni
+Question: Did Vittorio_Adorni won 1 bronze medals? (True/False)
+Expected: False
+Detected Pattern: 1
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 1: Single Year Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cyclist
+- Data Types: 6 numeric, 19 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Vittorio_Adorni" columns: id, birth_date, birth_place, currentteam, death_date, death_place, discipline, fullname, majorwins, medaltemplates, name, proteam1, proteam2, proteam3, proteam4, proteam5, proteam6, proteam7, proyears1, proyears2, proyears3, proyears4, proyears5, proyears6, proyears7, role, timestamp
+
+Question: Did Vittorio_Adorni won 1 bronze medals? (True/False)
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/23 = 0.0%
+----------------------------------------
+
+--- Question 24/50 ---
+Entity/Table: Lars_Michaelsen
+Question: How many years did Lars_Michaelsen played more for TVM compared to Festina?
+Expected: 0
+Detected Pattern: 1
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 1: Single Year Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cyclist
+- Data Types: 3 numeric, 24 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Lars_Michaelsen" columns: id, birth_date, birth_place, country, currentteam, dateofbirth, discipline, fullname, height, majorwins, name, proteam1, proteam2, proteam3, proteam4, proteam5, proteam6, proteams, proyears, proyears1, proyears2, proyears3, proyears4, proyears5, proyears6, ridername, role, timestamp, weight
+
+Question: How many years did Lars_Michaelsen played more for TVM compared to Festina?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/24 = 0.0%
+----------------------------------------
+
+--- Question 25/50 ---
+Entity/Table: Alejandro_Valverde
+Question: Difference if number of years between Alejandro_Valverde first medal and last medal?
+Expected: 12
+Detected Pattern: 1
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 1: Single Year Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cyclist
+- Data Types: 2 numeric, 24 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Alejandro_Valverde" columns: id, birth_date, birth_place, country, currentteam, dateofbirth, discipline, fullname, height, image_caption, majorwins, medaltemplates, name, nickname, placeofbirth, proteam1, proteam2, proteam3, proteams, proyears, proyears1, proyears2, proyears3, ridername, ridertype, role, timestamp, weight
+
+Question: Difference if number of years between Alejandro_Valverde first medal and last medal?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/25 = 0.0%
+----------------------------------------
+
+--- Question 26/50 ---
+Entity/Table: Mari_Holden
+Question: How many gold medals did Mari_Holden had till 2000 including 2000?
+Expected: 1
+Detected Pattern: 8
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 8: Cumulative Till Year
+
+DOMAIN ANALYSIS:
+- Domain Type: cyclist
+- Data Types: 1 numeric, 7 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Mari_Holden" columns: id, birth_date, birth_place, discipline, fullname, medaltemplates, name, ridertype, role, timestamp
+
+Question: How many gold medals did Mari_Holden had till 2000 including 2000?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/26 = 0.0%
+----------------------------------------
+
+--- Question 27/50 ---
+Entity/Table: Luc_Leblanc
+Question: How many years did Luc_Leblanc played for Le Groupement?
+Expected: 1
+Detected Pattern: 1
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 1: Single Year Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cyclist
+- Data Types: 4 numeric, 17 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Luc_Leblanc" columns: id, birth_date, birth_place, currentteam, discipline, fullname, majorwins, medaltemplates, name, proteam1, proteam2, proteam3, proteam4, proteam5, proteam6, proyears1, proyears2, proyears3, proyears4, proyears5, proyears6, role, timestamp
+
+Question: How many years did Luc_Leblanc played for Le Groupement?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/27 = 0.0%
+----------------------------------------
+
+--- Question 28/50 ---
+Entity/Table: Steven_Rooks
+Question: How many silver medals did Steven_Rooks had till 1991 including 1991?
+Expected: 1
+Detected Pattern: 8
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 8: Cumulative Till Year
+
+DOMAIN ANALYSIS:
+- Domain Type: cyclist
+- Data Types: 1 numeric, 9 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Steven_Rooks" columns: id, country, currentteam, dateofbirth, discipline, fullname, majorwins, medaltemplates, ridername, ridertype, role, timestamp
+
+Question: How many silver medals did Steven_Rooks had till 1991 including 1991?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/28 = 0.0%
+----------------------------------------
+
+--- Question 29/50 ---
+Entity/Table: Paolo_Bettini
+Question: Difference if number of years between Paolo_Bettini first medal and last medal?
+Expected: 7
+Detected Pattern: 1
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 1: Single Year Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cyclist
+- Data Types: 1 numeric, 15 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Paolo_Bettini" columns: id, country, currentteam, dateofbirth, discipline, fullname, height, image_caption, majorwins, medaltemplates, nickname, proteams, proyears, ridername, ridertype, role, timestamp, weight
+
+Question: Difference if number of years between Paolo_Bettini first medal and last medal?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/29 = 0.0%
+----------------------------------------
+
+--- Question 30/50 ---
+Entity/Table: Patrick_Sercu
+Question: Which year did Patrick_Sercu won most medals?
+Expected: 1964
+Detected Pattern: 1
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 1: Single Year Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cyclist
+- Data Types: 5 numeric, 11 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Patrick_Sercu" columns: id, birth_date, birth_place, country, currentteam, dateofbirth, death_date, discipline, fullname, height, majorwins, medaltemplates, name, ridername, ridertype, role, timestamp, weight
+
+Question: Which year did Patrick_Sercu won most medals?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/30 = 0.0%
+----------------------------------------
+
+--- Question 31/50 ---
+Entity/Table: Lars_Michaelsen
+Question: How many pro/amateur teams did Lars_Michaelsen played for more than 1 years?
+Expected: 0
+Detected Pattern: 1
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 1: Single Year Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cyclist
+- Data Types: 3 numeric, 24 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Lars_Michaelsen" columns: id, birth_date, birth_place, country, currentteam, dateofbirth, discipline, fullname, height, majorwins, name, proteam1, proteam2, proteam3, proteam4, proteam5, proteam6, proteams, proyears, proyears1, proyears2, proyears3, proyears4, proyears5, proyears6, ridername, role, timestamp, weight
+
+Question: How many pro/amateur teams did Lars_Michaelsen played for more than 1 years?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/31 = 0.0%
+----------------------------------------
+
+--- Question 32/50 ---
+Entity/Table: Rudi_Altig
+Question: Did Rudi_Altig won 1 gold medals? (True/False)
+Expected: True
+Detected Pattern: 1
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 1: Single Year Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cyclist
+- Data Types: 3 numeric, 23 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Rudi_Altig" columns: id, birth_date, birth_place, currentteam, death_date, death_place, discipline, fullname, majorwins, medaltemplates, name, proteam1, proteam2, proteam3, proteam4, proteam5, proteam6, proteam7, proyears1, proyears2, proyears3, proyears4, proyears5, proyears6, proyears7, ridertype, role, timestamp
+
+Question: Did Rudi_Altig won 1 gold medals? (True/False)
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/32 = 0.0%
+----------------------------------------
+
+--- Question 33/50 ---
+Entity/Table: Luc_Leblanc
+Question: How many gold medals did Luc_Leblanc had till 1994 including 1994?
+Expected: 1
+Detected Pattern: 8
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 8: Cumulative Till Year
+
+DOMAIN ANALYSIS:
+- Domain Type: cyclist
+- Data Types: 4 numeric, 17 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Luc_Leblanc" columns: id, birth_date, birth_place, currentteam, discipline, fullname, majorwins, medaltemplates, name, proteam1, proteam2, proteam3, proteam4, proteam5, proteam6, proyears1, proyears2, proyears3, proyears4, proyears5, proyears6, role, timestamp
+
+Question: How many gold medals did Luc_Leblanc had till 1994 including 1994?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+---------------------------------------------------------------------------
+KeyboardInterrupt                         Traceback (most recent call last)
+/tmp/ipython-input-36-2475615896.py in <cell line: 0>()
+    805 
+    806         # Get SQL
+--> 807         sql = ask_gemini(prompt)
+    808         print(f"Generated SQL: {sql}")
+    809 
+
+14 frames
+/usr/lib/python3.11/ssl.py in read(self, len, buffer)
+   1164         try:
+   1165             if buffer is not None:
+-> 1166                 return self._sslobj.read(len, buffer)
+   1167             else:
+   1168                 return self._sslobj.read(len)
+
+KeyboardInterrupt: 

@@ -1,0 +1,2844 @@
+Testing cricketer domain with 50 questions...
+============================================================
+Available tables: ['Matthew_Hoggard', 'Herschelle_Gibbs', 'Makhaya_Ntini', 'Sanath_Jayasuriya', 'Shane_Bond']... (showing first 5)
+Total tables: 65
+
+--- Question 1/50 ---
+Entity/Table: James_Franklin_(cricketer)
+Question: How many 50s did James Franklin score in ODI from 2012 to 2016?
+Expected: 1
+Detected Pattern: 2
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 2: Date Range Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cricketer
+- Data Types: 39 numeric, 20 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "James_Franklin_(cricketer)" columns: id, fc_100s_50s, fc_bat_avg, fc_best_bowling, fc_bowl_avg, fc_catches_stumpings, fc_deliveries, fc_fivefor, fc_matches, fc_runs, fc_tenfor, fc_top_score, fc_wickets, la_100s_50s, la_bat_avg, la_best_bowling, la_bowl_avg, la_catches_stumpings, la_deliveries, la_fivefor, la_matches, la_runs, la_tenfor, la_wickets, odi_100s_50s, odi_bat_avg, odi_best_bowling, odi_bowl_avg, odi_catches_stumpings, odi_deliveries, odi_fivefor, odi_matches, odi_runs, odi_tenfor, odi_wickets, t20_100s_50s, t20_bat_avg, t20_best_bowling, t20_bowl_avg, t20_catches_stumpings, t20_deliveries, t20_fivefor, t20_matches, t20_runs, t20_tenfor, t20_top_score, t20_wickets, test_100s_50s, test_bat_avg, test_best_bowling, test_bowl_avg, test_catches_stumpings, test_deliveries, test_fivefor, test_matches, test_runs, test_tenfor, test_wickets, internationalspan, name, timestamp
+
+Question: How many 50s did James Franklin score in ODI from 2012 to 2016?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+No SQL found in response
+Rate limited with key3, trying next...
+API Test: SELECT NULL
+Rate limited with key1, trying next...
+Generated SQL: SELECT odi_100s_50s FROM James_Franklin_(cricketer) WHERE CAST(strftime('%Y', timestamp) AS INTEGER) BETWEEN 2012 AND 2016;
+Cleaned SQL: SELECT odi_100s_50s FROM James_Franklin_(cricketer) WHERE CAST(strftime('%Y', timestamp) AS INTEGER) BETWEEN 2012 AND 2016;
+SQL Error: no such table: James_Franklin_
+Failed SQL: SELECT odi_100s_50s FROM James_Franklin_(cricketer) WHERE CAST(strftime('%Y', timestamp) AS INTEGER) BETWEEN 2012 AND 2016;
+Answer: 
+Result: ❌
+Current Score: 0/1 = 0.0%
+----------------------------------------
+
+--- Question 2/50 ---
+Entity/Table: Steve_Tikolo
+Question: How many 50s did Steve Tikolo score in LA in 2014?
+Expected: 1
+Detected Pattern: 1
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 1: Single Year Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cricketer
+- Data Types: 35 numeric, 15 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Steve_Tikolo" columns: id, fc_100s_50s, fc_bat_avg, fc_best_bowling, fc_bowl_avg, fc_catches_stumpings, fc_deliveries, fc_fivefor, fc_matches, fc_runs, fc_tenfor, fc_top_score, fc_wickets, la_100s_50s, la_bat_avg, la_best_bowling, la_bowl_avg, la_catches_stumpings, la_deliveries, la_fivefor, la_matches, la_runs, la_tenfor, la_top_score, la_wickets, odi_100s_50s, odi_bat_avg, odi_best_bowling, odi_bowl_avg, odi_catches_stumpings, odi_deliveries, odi_fivefor, odi_matches, odi_runs, odi_tenfor, odi_top_score, odi_wickets, t20_100s_50s, t20_bat_avg, t20_best_bowling, t20_bowl_avg, t20_catches_stumpings, t20_deliveries, t20_fivefor, t20_matches, t20_runs, t20_tenfor, t20_top_score, t20_wickets, internationalspan, name, timestamp
+
+Question: How many 50s did Steve Tikolo score in LA in 2014?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Generated SQL: SELECT la_100s_50s FROM Steve_Tikolo WHERE name = 'Steve Tikolo' AND strftime('%Y', timestamp) = '2014';
+Cleaned SQL: SELECT la_100s_50s FROM Steve_Tikolo WHERE name = 'Steve Tikolo' AND strftime('%Y', timestamp) = '2014';
+Answer: 9/40
+Result: ❌
+Current Score: 0/2 = 0.0%
+----------------------------------------
+
+--- Question 3/50 ---
+Entity/Table: Rangana_Herath
+Question: How many matches did Rangana Herath played in FC in 2009?
+Expected: 20
+Detected Pattern: 1
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 1: Single Year Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cricketer
+- Data Types: 37 numeric, 21 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Rangana_Herath" columns: id, fc_100s_50s, fc_bat_avg, fc_best_bowling, fc_bowl_avg, fc_catches_stumpings, fc_deliveries, fc_fivefor, fc_matches, fc_runs, fc_tenfor, fc_wickets, la_100s_50s, la_bat_avg, la_best_bowling, la_bowl_avg, la_catches_stumpings, la_deliveries, la_fivefor, la_matches, la_runs, la_tenfor, la_wickets, odi_100s_50s, odi_bat_avg, odi_best_bowling, odi_bowl_avg, odi_catches_stumpings, odi_deliveries, odi_fivefor, odi_matches, odi_runs, odi_tenfor, odi_wickets, t20_100s_50s, t20_bat_avg, t20_best_bowling, t20_bowl_avg, t20_catches_stumpings, t20_deliveries, t20_fivefor, t20_matches, t20_runs, t20_tenfor, t20_top_score, t20_wickets, test_100s_50s, test_bat_avg, test_best_bowling, test_bowl_avg, test_catches_stumpings, test_deliveries, test_fivefor, test_matches, test_runs, test_tenfor, test_wickets, internationalspan, name, timestamp
+
+Question: How many matches did Rangana Herath played in FC in 2009?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Generated SQL: SELECT fc_matches FROM Rangana_Herath WHERE strftime('%Y', timestamp) = '2009';
+Cleaned SQL: SELECT fc_matches FROM Rangana_Herath WHERE strftime('%Y', timestamp) = '2009';
+Answer: 165
+Result: ❌
+Current Score: 0/3 = 0.0%
+----------------------------------------
+
+--- Question 4/50 ---
+Entity/Table: Yuvraj_Singh
+Question: How many wickets did Yuvraj Singh took in Test in 2011?
+Expected: 1
+Detected Pattern: 1
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 1: Single Year Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cricketer
+- Data Types: 18 numeric, 7 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Yuvraj_Singh" columns: id, fc_100s_50s, fc_bat_avg, fc_best_bowling, fc_bowl_avg, fc_catches_stumpings, fc_deliveries, fc_fivefor, fc_matches, fc_runs, fc_tenfor, fc_top_score, fc_wickets, test_100s_50s, test_bat_avg, test_best_bowling, test_bowl_avg, test_catches_stumpings, test_deliveries, test_fivefor, test_matches, test_runs, test_tenfor, test_top_score, test_wickets, name, timestamp
+
+Question: How many wickets did Yuvraj Singh took in Test in 2011?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Generated SQL: SELECT test_wickets FROM Yuvraj_Singh WHERE name = 'Yuvraj Singh' AND strftime('%Y', timestamp) = '2011';
+Cleaned SQL: SELECT test_wickets FROM Yuvraj_Singh WHERE name = 'Yuvraj Singh' AND strftime('%Y', timestamp) = '2011';
+Answer: 8
+Result: ❌
+Current Score: 0/4 = 0.0%
+----------------------------------------
+
+--- Question 5/50 ---
+Entity/Table: Makhaya_Ntini
+Question: How many matches did Makhaya Ntini played in Tests and ODIs combined from 2009 to 2011?
+Expected: 1
+Detected Pattern: 2
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 2: Date Range Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cricketer
+- Data Types: 30 numeric, 15 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Makhaya_Ntini" columns: id, fc_100s_50s, fc_bat_avg, fc_best_bowling, fc_bowl_avg, fc_catches_stumpings, fc_deliveries, fc_fivefor, fc_matches, fc_runs, fc_tenfor, fc_wickets, la_100s_50s, la_bat_avg, la_best_bowling, la_bowl_avg, la_catches_stumpings, la_deliveries, la_fivefor, la_matches, la_runs, la_tenfor, la_wickets, odi_100s_50s, odi_bat_avg, odi_best_bowling, odi_bowl_avg, odi_catches_stumpings, odi_deliveries, odi_fivefor, odi_matches, odi_runs, odi_tenfor, odi_wickets, test_100s_50s, test_bat_avg, test_best_bowling, test_bowl_avg, test_catches_stumpings, test_deliveries, test_fivefor, test_matches, test_runs, test_tenfor, test_wickets, name, timestamp
+
+Question: How many matches did Makhaya Ntini played in Tests and ODIs combined from 2009 to 2011?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+No SQL found in response
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/5 = 0.0%
+----------------------------------------
+
+--- Question 6/50 ---
+Entity/Table: Simon_Katich
+Question: How many 50s did Simon Katich score in FC from 2007 to 2010?
+Expected: 27
+Detected Pattern: 2
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 2: Date Range Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cricketer
+- Data Types: 29 numeric, 18 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Simon_Katich" columns: id, fc_100s_50s, fc_bat_avg, fc_best_bowling, fc_bowl_avg, fc_catches_stumpings, fc_deliveries, fc_fivefor, fc_matches, fc_runs, fc_tenfor, fc_top_score, fc_wickets, la_100s_50s, la_bat_avg, la_best_bowling, la_bowl_avg, la_catches_stumpings, la_deliveries, la_fivefor, la_matches, la_runs, la_tenfor, la_wickets, odi_100s_50s, odi_bat_avg, odi_best_bowling, odi_bowl_avg, odi_catches_stumpings, odi_deliveries, odi_fivefor, odi_matches, odi_runs, odi_tenfor, odi_wickets, test_100s_50s, test_bat_avg, test_best_bowling, test_bowl_avg, test_catches_stumpings, test_deliveries, test_fivefor, test_matches, test_runs, test_tenfor, test_top_score, test_wickets, name, timestamp
+
+Question: How many 50s did Simon Katich score in FC from 2007 to 2010?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Generated SQL: SELECT fc_100s_50s FROM Simon_Katich WHERE strftime('%Y', timestamp) BETWEEN '2007' AND '2010';
+Cleaned SQL: SELECT fc_100s_50s FROM Simon_Katich WHERE strftime('%Y', timestamp) BETWEEN '2007' AND '2010';
+Answer: 37/71
+Result: ❌
+Current Score: 0/6 = 0.0%
+----------------------------------------
+
+--- Question 7/50 ---
+Entity/Table: Michael_Clarke_(cricketer)
+Question: How many fivefor did Michael Clarke took in Tests and ODIs combined from 2009 to 2012?
+Expected: 1
+Detected Pattern: 2
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 2: Date Range Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cricketer
+- Data Types: 24 numeric, 12 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Michael_Clarke_(cricketer)" columns: id, fc_100s_50s, fc_bat_avg, fc_best_bowling, fc_bowl_avg, fc_catches_stumpings, fc_deliveries, fc_fivefor, fc_matches, fc_runs, fc_tenfor, fc_wickets, odi_100s_50s, odi_bat_avg, odi_best_bowling, odi_bowl_avg, odi_catches_stumpings, odi_deliveries, odi_fivefor, odi_matches, odi_runs, odi_tenfor, odi_top_score, odi_wickets, test_100s_50s, test_bat_avg, test_best_bowling, test_bowl_avg, test_catches_stumpings, test_deliveries, test_fivefor, test_matches, test_runs, test_tenfor, test_top_score, test_wickets, name, timestamp
+
+Question: How many fivefor did Michael Clarke took in Tests and ODIs combined from 2009 to 2012?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+No SQL found in response
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/7 = 0.0%
+----------------------------------------
+
+--- Question 8/50 ---
+Entity/Table: Parthiv_Patel
+Question: How many 100s did Parthiv Patel score in FC from 2011 to 2014?
+Expected: 3
+Detected Pattern: 2
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 2: Date Range Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cricketer
+- Data Types: 20 numeric, 30 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Parthiv_Patel" columns: id, fc_100s_50s, fc_bat_avg, fc_best_bowling, fc_bowl_avg, fc_catches_stumpings, fc_deliveries, fc_fivefor, fc_matches, fc_runs, fc_tenfor, fc_top_score, fc_wickets, odi_100s_50s, odi_bat_avg, odi_best_bowling, odi_bowl_avg, odi_catches_stumpings, odi_deliveries, odi_fivefor, odi_matches, odi_runs, odi_tenfor, odi_top_score, odi_wickets, t20_100s_50s, t20_bat_avg, t20_best_bowling, t20_bowl_avg, t20_catches_stumpings, t20_deliveries, t20_fivefor, t20_matches, t20_runs, t20_tenfor, t20_top_score, t20_wickets, test_100s_50s, test_bat_avg, test_best_bowling, test_bowl_avg, test_catches_stumpings, test_deliveries, test_fivefor, test_matches, test_runs, test_tenfor, test_top_score, test_wickets, internationalspan, name, timestamp
+
+Question: How many 100s did Parthiv Patel score in FC from 2011 to 2014?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Generated SQL: SELECT fc_100s_50s FROM Parthiv_Patel WHERE strftime('%Y', timestamp) BETWEEN '2011' AND '2014';
+Cleaned SQL: SELECT fc_100s_50s FROM Parthiv_Patel WHERE strftime('%Y', timestamp) BETWEEN '2011' AND '2014';
+Answer: 14/33
+Result: ❌
+Current Score: 0/8 = 0.0%
+----------------------------------------
+
+--- Question 9/50 ---
+Entity/Table: Harbhajan_Singh
+Question: How many 100s did Harbhajan Singh score in FC from 2008 to 2012?
+Expected: 2
+Detected Pattern: 2
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 2: Date Range Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cricketer
+- Data Types: 19 numeric, 6 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Harbhajan_Singh" columns: id, fc_100s_50s, fc_bat_avg, fc_best_bowling, fc_bowl_avg, fc_catches_stumpings, fc_deliveries, fc_fivefor, fc_matches, fc_runs, fc_tenfor, fc_top_score, fc_wickets, test_100s_50s, test_bat_avg, test_best_bowling, test_bowl_avg, test_catches_stumpings, test_deliveries, test_fivefor, test_matches, test_runs, test_tenfor, test_top_score, test_wickets, name, timestamp
+
+Question: How many 100s did Harbhajan Singh score in FC from 2008 to 2012?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Generated SQL: SELECT fc_100s_50s FROM Harbhajan_Singh WHERE strftime('%Y', timestamp) BETWEEN '2008' AND '2012';
+Cleaned SQL: SELECT fc_100s_50s FROM Harbhajan_Singh WHERE strftime('%Y', timestamp) BETWEEN '2008' AND '2012';
+Answer: 0/8
+Result: ❌
+Current Score: 0/9 = 0.0%
+----------------------------------------
+
+--- Question 10/50 ---
+Entity/Table: Matthew_Hoggard
+Question: How many 50s did Matthew Hoggard score in FC in 2009?
+Expected: 1
+Detected Pattern: 1
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 1: Single Year Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cricketer
+- Data Types: 33 numeric, 15 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Matthew_Hoggard" columns: id, fc_100s_50s, fc_bat_avg, fc_best_bowling, fc_bowl_avg, fc_catches_stumpings, fc_deliveries, fc_fivefor, fc_matches, fc_runs, fc_tenfor, fc_wickets, la_100s_50s, la_bat_avg, la_best_bowling, la_bowl_avg, la_catches_stumpings, la_deliveries, la_fivefor, la_matches, la_runs, la_tenfor, la_top_score, la_wickets, odi_100s_50s, odi_bat_avg, odi_best_bowling, odi_bowl_avg, odi_catches_stumpings, odi_deliveries, odi_fivefor, odi_matches, odi_runs, odi_tenfor, odi_top_score, odi_wickets, test_100s_50s, test_bat_avg, test_best_bowling, test_bowl_avg, test_catches_stumpings, test_deliveries, test_fivefor, test_matches, test_runs, test_tenfor, test_top_score, test_wickets, name, timestamp
+
+Question: How many 50s did Matthew Hoggard score in FC in 2009?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+No SQL found in response
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/10 = 0.0%
+----------------------------------------
+
+--- Question 11/50 ---
+Entity/Table: Michael_Clarke_(cricketer)
+Question: How many 50s did Michael Clarke score in FC in 2010?
+Expected: 2
+Detected Pattern: 1
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 1: Single Year Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cricketer
+- Data Types: 24 numeric, 12 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Michael_Clarke_(cricketer)" columns: id, fc_100s_50s, fc_bat_avg, fc_best_bowling, fc_bowl_avg, fc_catches_stumpings, fc_deliveries, fc_fivefor, fc_matches, fc_runs, fc_tenfor, fc_wickets, odi_100s_50s, odi_bat_avg, odi_best_bowling, odi_bowl_avg, odi_catches_stumpings, odi_deliveries, odi_fivefor, odi_matches, odi_runs, odi_tenfor, odi_top_score, odi_wickets, test_100s_50s, test_bat_avg, test_best_bowling, test_bowl_avg, test_catches_stumpings, test_deliveries, test_fivefor, test_matches, test_runs, test_tenfor, test_top_score, test_wickets, name, timestamp
+
+Question: How many 50s did Michael Clarke score in FC in 2010?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+No SQL found in response
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/11 = 0.0%
+----------------------------------------
+
+--- Question 12/50 ---
+Entity/Table: VVS_Laxman
+Question: How many 100s did VVS Laxman score in Tests and ODIs combined from 2009 to 2012?
+Expected: 3
+Detected Pattern: 2
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 2: Date Range Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cricketer
+- Data Types: 32 numeric, 17 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "VVS_Laxman" columns: id, fc_100s_50s, fc_bat_avg, fc_best_bowling, fc_bowl_avg, fc_catches_stumpings, fc_deliveries, fc_fivefor, fc_matches, fc_runs, fc_tenfor, fc_top_score, fc_wickets, la_100s_50s, la_bat_avg, la_best_bowling, la_bowl_avg, la_catches_stumpings, la_deliveries, la_fivefor, la_matches, la_runs, la_tenfor, la_top_score, la_wickets, odi_100s_50s, odi_bat_avg, odi_best_bowling, odi_bowl_avg, odi_catches_stumpings, odi_deliveries, odi_fivefor, odi_matches, odi_runs, odi_tenfor, odi_top_score, odi_wickets, test_100s_50s, test_bat_avg, test_best_bowling, test_bowl_avg, test_catches_stumpings, test_deliveries, test_fivefor, test_matches, test_runs, test_tenfor, test_top_score, test_wickets, name, timestamp
+
+Question: How many 100s did VVS Laxman score in Tests and ODIs combined from 2009 to 2012?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Generated SQL: SELECT SUM(CASE WHEN strftime('%Y', timestamp) BETWEEN '2009' AND '2012' THEN CAST(SUBSTR(test_100s_50s, 1, INSTR(test_100s_50s, '+') - 1) AS INTEGER) + CAST(SUBSTR(odi_100s_50s, 1, INSTR(odi_100s_50s, '+') - 1) AS INTEGER) ELSE 0 END) FROM VVS_Laxman WHERE name = 'VVS Laxman';
+Cleaned SQL: SELECT SUM(CASE WHEN strftime('%Y', timestamp) BETWEEN '2009' AND '2012' THEN CAST(SUBSTR(test_100s_50s, 1, INSTR(test_100s_50s, '+') - 1) AS INTEGER) + CAST(SUBSTR(odi_100s_50s, 1, INSTR(odi_100s_50s, '+') - 1) AS INTEGER) ELSE 0 END) FROM VVS_Laxman WHERE name = 'VVS Laxman';
+Answer: 0
+Result: ❌
+Current Score: 0/12 = 0.0%
+----------------------------------------
+
+--- Question 13/50 ---
+Entity/Table: Nuwan_Kulasekara
+Question: How many runs did Nuwan Kulasekara scored in Test in 2013?
+Expected: 22
+Detected Pattern: 1
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 1: Single Year Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cricketer
+- Data Types: 33 numeric, 17 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Nuwan_Kulasekara" columns: id, fc_100s_50s, fc_bat_avg, fc_best_bowling, fc_bowl_avg, fc_catches_stumpings, fc_deliveries, fc_fivefor, fc_matches, fc_runs, fc_tenfor, fc_top_score, fc_wickets, odi_100s_50s, odi_bat_avg, odi_best_bowling, odi_bowl_avg, odi_catches_stumpings, odi_deliveries, odi_fivefor, odi_matches, odi_runs, odi_tenfor, odi_top_score, odi_wickets, t20_100s_50s, t20_bat_avg, t20_best_bowling, t20_bowl_avg, t20_catches_stumpings, t20_deliveries, t20_fivefor, t20_matches, t20_runs, t20_tenfor, t20_top_score, t20_wickets, test_100s_50s, test_bat_avg, test_best_bowling, test_bowl_avg, test_catches_stumpings, test_deliveries, test_fivefor, test_matches, test_runs, test_tenfor, test_top_score, test_wickets, internationalspan, name, timestamp
+
+Question: How many runs did Nuwan Kulasekara scored in Test in 2013?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/13 = 0.0%
+----------------------------------------
+
+--- Question 14/50 ---
+Entity/Table: James_Franklin_(cricketer)
+Question: How many wickets did James Franklin took in FC in 2012?
+Expected: 11
+Detected Pattern: 1
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 1: Single Year Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cricketer
+- Data Types: 39 numeric, 20 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "James_Franklin_(cricketer)" columns: id, fc_100s_50s, fc_bat_avg, fc_best_bowling, fc_bowl_avg, fc_catches_stumpings, fc_deliveries, fc_fivefor, fc_matches, fc_runs, fc_tenfor, fc_top_score, fc_wickets, la_100s_50s, la_bat_avg, la_best_bowling, la_bowl_avg, la_catches_stumpings, la_deliveries, la_fivefor, la_matches, la_runs, la_tenfor, la_wickets, odi_100s_50s, odi_bat_avg, odi_best_bowling, odi_bowl_avg, odi_catches_stumpings, odi_deliveries, odi_fivefor, odi_matches, odi_runs, odi_tenfor, odi_wickets, t20_100s_50s, t20_bat_avg, t20_best_bowling, t20_bowl_avg, t20_catches_stumpings, t20_deliveries, t20_fivefor, t20_matches, t20_runs, t20_tenfor, t20_top_score, t20_wickets, test_100s_50s, test_bat_avg, test_best_bowling, test_bowl_avg, test_catches_stumpings, test_deliveries, test_fivefor, test_matches, test_runs, test_tenfor, test_wickets, internationalspan, name, timestamp
+
+Question: How many wickets did James Franklin took in FC in 2012?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/14 = 0.0%
+----------------------------------------
+
+--- Question 15/50 ---
+Entity/Table: Scott_Styris
+Question: How many wickets did Scott Styris took in Tests and ODIs combined from 2009 to 2017?
+Expected: 12
+Detected Pattern: 2
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 2: Date Range Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cricketer
+- Data Types: 26 numeric, 11 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Scott_Styris" columns: id, fc_100s_50s, fc_bat_avg, fc_best_bowling, fc_bowl_avg, fc_catches_stumpings, fc_deliveries, fc_fivefor, fc_matches, fc_runs, fc_tenfor, fc_wickets, odi_100s_50s, odi_bat_avg, odi_best_bowling, odi_bowl_avg, odi_catches_stumpings, odi_deliveries, odi_fivefor, odi_matches, odi_runs, odi_tenfor, odi_top_score, odi_wickets, test_100s_50s, test_bat_avg, test_best_bowling, test_bowl_avg, test_catches_stumpings, test_deliveries, test_fivefor, test_matches, test_runs, test_tenfor, test_top_score, test_wickets, internationalspan, name, timestamp
+
+Question: How many wickets did Scott Styris took in Tests and ODIs combined from 2009 to 2017?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/15 = 0.0%
+----------------------------------------
+
+--- Question 16/50 ---
+Entity/Table: Scott_Styris
+Question: How many 50s did Scott Styris score in Tests and ODIs combined from 2013 to 2017?
+Expected: 5
+Detected Pattern: 2
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 2: Date Range Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cricketer
+- Data Types: 26 numeric, 11 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Scott_Styris" columns: id, fc_100s_50s, fc_bat_avg, fc_best_bowling, fc_bowl_avg, fc_catches_stumpings, fc_deliveries, fc_fivefor, fc_matches, fc_runs, fc_tenfor, fc_wickets, odi_100s_50s, odi_bat_avg, odi_best_bowling, odi_bowl_avg, odi_catches_stumpings, odi_deliveries, odi_fivefor, odi_matches, odi_runs, odi_tenfor, odi_top_score, odi_wickets, test_100s_50s, test_bat_avg, test_best_bowling, test_bowl_avg, test_catches_stumpings, test_deliveries, test_fivefor, test_matches, test_runs, test_tenfor, test_top_score, test_wickets, internationalspan, name, timestamp
+
+Question: How many 50s did Scott Styris score in Tests and ODIs combined from 2013 to 2017?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Generated SQL: SELECT SUM(CAST(SUBSTR(REPLACE(CASE WHEN test_100s_50s LIKE '%-%' THEN test_100s_50s ELSE '0-0' END, ' ', ''), INSTR(REPLACE(CASE WHEN test_100s_50s LIKE '%-%' THEN test_100s_50s ELSE '0-0' END, ' ', ''), '-') + 1) AS INTEGER) + CAST(SUBSTR(REPLACE(CASE WHEN odi_100s_50s LIKE '%-%' THEN odi_100s_50s ELSE '0-0' END, ' ', ''), INSTR(REPLACE(CASE WHEN odi_100s_50s LIKE '%-%' THEN odi_100s_50s ELSE '0-0' END, ' ', ''), '-') + 1) AS INTEGER)) FROM Scott_Styris WHERE strftime('%Y', timestamp) BETWEEN '2013' AND '2017';
+Cleaned SQL: SELECT SUM(CAST(SUBSTR(REPLACE(CASE WHEN test_100s_50s LIKE '%-%' THEN test_100s_50s ELSE '0-0' END, ' ', ''), INSTR(REPLACE(CASE WHEN test_100s_50s LIKE '%-%' THEN test_100s_50s ELSE '0-0' END, ' ', ''), '-') + 1) AS INTEGER) + CAST(SUBSTR(REPLACE(CASE WHEN odi_100s_50s LIKE '%-%' THEN odi_100s_50s ELSE '0-0' END, ' ', ''), INSTR(REPLACE(CASE WHEN odi_100s_50s LIKE '%-%' THEN odi_100s_50s ELSE '0-0' END, ' ', ''), '-') + 1) AS INTEGER)) FROM Scott_Styris WHERE strftime('%Y', timestamp) BETWEEN '2013' AND '2017';
+Answer: 0
+Result: ❌
+Current Score: 0/16 = 0.0%
+----------------------------------------
+
+--- Question 17/50 ---
+Entity/Table: Matthew_Hayden
+Question: How many matches did Matthew Hayden played in FC in 2008?
+Expected: 9
+Detected Pattern: 1
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 1: Single Year Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cricketer
+- Data Types: 17 numeric, 8 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Matthew_Hayden" columns: id, fc_100s_50s, fc_bat_avg, fc_best_bowling, fc_bowl_avg, fc_catches_stumpings, fc_deliveries, fc_fivefor, fc_matches, fc_runs, fc_tenfor, fc_top_score, fc_wickets, test_100s_50s, test_bat_avg, test_best_bowling, test_bowl_avg, test_catches_stumpings, test_deliveries, test_fivefor, test_matches, test_runs, test_tenfor, test_top_score, test_wickets, name, timestamp
+
+Question: How many matches did Matthew Hayden played in FC in 2008?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/17 = 0.0%
+----------------------------------------
+
+--- Question 18/50 ---
+Entity/Table: Parthiv_Patel
+Question: How many matches did Parthiv Patel played in Tests and ODIs combined from 2017 to 2019?
+Expected: 2
+Detected Pattern: 2
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 2: Date Range Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cricketer
+- Data Types: 20 numeric, 30 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Parthiv_Patel" columns: id, fc_100s_50s, fc_bat_avg, fc_best_bowling, fc_bowl_avg, fc_catches_stumpings, fc_deliveries, fc_fivefor, fc_matches, fc_runs, fc_tenfor, fc_top_score, fc_wickets, odi_100s_50s, odi_bat_avg, odi_best_bowling, odi_bowl_avg, odi_catches_stumpings, odi_deliveries, odi_fivefor, odi_matches, odi_runs, odi_tenfor, odi_top_score, odi_wickets, t20_100s_50s, t20_bat_avg, t20_best_bowling, t20_bowl_avg, t20_catches_stumpings, t20_deliveries, t20_fivefor, t20_matches, t20_runs, t20_tenfor, t20_top_score, t20_wickets, test_100s_50s, test_bat_avg, test_best_bowling, test_bowl_avg, test_catches_stumpings, test_deliveries, test_fivefor, test_matches, test_runs, test_tenfor, test_top_score, test_wickets, internationalspan, name, timestamp
+
+Question: How many matches did Parthiv Patel played in Tests and ODIs combined from 2017 to 2019?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/18 = 0.0%
+----------------------------------------
+
+--- Question 19/50 ---
+Entity/Table: Robert_Key_(cricketer)
+Question: How many wickets did Robert Key took in FC in 2009?
+Expected: 1
+Detected Pattern: 1
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 1: Single Year Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cricketer
+- Data Types: 19 numeric, 30 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Robert_Key_(cricketer)" columns: id, fc_100s_50s, fc_bat_avg, fc_best_bowling, fc_bowl_avg, fc_catches_stumpings, fc_deliveries, fc_fivefor, fc_matches, fc_runs, fc_tenfor, fc_top_score, fc_wickets, la_100s_50s, la_bat_avg, la_best_bowling, la_bowl_avg, la_catches_stumpings, la_deliveries, la_fivefor, la_matches, la_runs, la_tenfor, la_top_score, la_wickets, odi_100s_50s, odi_bat_avg, odi_best_bowling, odi_bowl_avg, odi_catches_stumpings, odi_deliveries, odi_fivefor, odi_matches, odi_runs, odi_tenfor, odi_top_score, odi_wickets, test_100s_50s, test_bat_avg, test_best_bowling, test_bowl_avg, test_catches_stumpings, test_deliveries, test_fivefor, test_matches, test_runs, test_tenfor, test_top_score, test_wickets, name, timestamp
+
+Question: How many wickets did Robert Key took in FC in 2009?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/19 = 0.0%
+----------------------------------------
+
+--- Question 20/50 ---
+Entity/Table: Abdur_Razzak_(cricketer)
+Question: How many fivefor did Abdur Razzak took in ODI in 2013?
+Expected: 1
+Detected Pattern: 1
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 1: Single Year Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cricketer
+- Data Types: 42 numeric, 19 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Abdur_Razzak_(cricketer)" columns: id, fc_100s_50s, fc_bat_avg, fc_best_bowling, fc_bowl_avg, fc_catches_stumpings, fc_deliveries, fc_fivefor, fc_matches, fc_runs, fc_tenfor, fc_top_score, fc_wickets, la_100s_50s, la_bat_avg, la_best_bowling, la_bowl_avg, la_catches_stumpings, la_deliveries, la_fivefor, la_matches, la_runs, la_tenfor, la_wickets, odi_100s_50s, odi_bat_avg, odi_best_bowling, odi_bowl_avg, odi_catches_stumpings, odi_deliveries, odi_fivefor, odi_matches, odi_runs, odi_tenfor, odi_top_score, odi_wickets, t20_100s_50s, t20_bat_avg, t20_best_bowling, t20_bowl_avg, t20_catches_stumpings, t20_deliveries, t20_fivefor, t20_matches, t20_runs, t20_tenfor, t20_top_score, t20_wickets, test_100s_50s, test_bat_avg, test_best_bowling, test_bowl_avg, test_catches_stumpings, test_deliveries, test_fivefor, test_matches, test_runs, test_tenfor, test_top_score, test_wickets, internationalspan, name, timestamp
+
+Question: How many fivefor did Abdur Razzak took in ODI in 2013?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/20 = 0.0%
+----------------------------------------
+
+--- Question 21/50 ---
+Entity/Table: James_Franklin_(cricketer)
+Question: How many wickets did James Franklin took in Test in 2013?
+Expected: 1
+Detected Pattern: 1
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 1: Single Year Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cricketer
+- Data Types: 39 numeric, 20 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "James_Franklin_(cricketer)" columns: id, fc_100s_50s, fc_bat_avg, fc_best_bowling, fc_bowl_avg, fc_catches_stumpings, fc_deliveries, fc_fivefor, fc_matches, fc_runs, fc_tenfor, fc_top_score, fc_wickets, la_100s_50s, la_bat_avg, la_best_bowling, la_bowl_avg, la_catches_stumpings, la_deliveries, la_fivefor, la_matches, la_runs, la_tenfor, la_wickets, odi_100s_50s, odi_bat_avg, odi_best_bowling, odi_bowl_avg, odi_catches_stumpings, odi_deliveries, odi_fivefor, odi_matches, odi_runs, odi_tenfor, odi_wickets, t20_100s_50s, t20_bat_avg, t20_best_bowling, t20_bowl_avg, t20_catches_stumpings, t20_deliveries, t20_fivefor, t20_matches, t20_runs, t20_tenfor, t20_top_score, t20_wickets, test_100s_50s, test_bat_avg, test_best_bowling, test_bowl_avg, test_catches_stumpings, test_deliveries, test_fivefor, test_matches, test_runs, test_tenfor, test_wickets, internationalspan, name, timestamp
+
+Question: How many wickets did James Franklin took in Test in 2013?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/21 = 0.0%
+----------------------------------------
+
+--- Question 22/50 ---
+Entity/Table: Andrew_Symonds
+Question: How many 50s did Andrew Symonds score in FC in 2009?
+Expected: 2
+Detected Pattern: 1
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 1: Single Year Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cricketer
+- Data Types: 23 numeric, 14 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Andrew_Symonds" columns: id, fc_100s_50s, fc_bat_avg, fc_best_bowling, fc_bowl_avg, fc_catches_stumpings, fc_deliveries, fc_fivefor, fc_matches, fc_runs, fc_tenfor, fc_wickets, odi_100s_50s, odi_bat_avg, odi_best_bowling, odi_bowl_avg, odi_catches_stumpings, odi_deliveries, odi_fivefor, odi_matches, odi_runs, odi_tenfor, odi_top_score, odi_wickets, test_100s_50s, test_bat_avg, test_best_bowling, test_bowl_avg, test_catches_stumpings, test_deliveries, test_fivefor, test_matches, test_runs, test_tenfor, test_top_score, test_wickets, name, timestamp, year2
+
+Question: How many 50s did Andrew Symonds score in FC in 2009?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/22 = 0.0%
+----------------------------------------
+
+--- Question 23/50 ---
+Entity/Table: Graeme_Smith
+Question: How many 100s did Graeme Smith score in FC in 2011?
+Expected: 3
+Detected Pattern: 1
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 1: Single Year Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cricketer
+- Data Types: 44 numeric, 18 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Graeme_Smith" columns: id, fc_100s_50s, fc_bat_avg, fc_best_bowling, fc_bowl_avg, fc_catches_stumpings, fc_deliveries, fc_fivefor, fc_matches, fc_runs, fc_tenfor, fc_top_score, fc_wickets, la_100s_50s, la_bat_avg, la_best_bowling, la_bowl_avg, la_catches_stumpings, la_deliveries, la_fivefor, la_matches, la_runs, la_tenfor, la_top_score, la_wickets, odi_100s_50s, odi_bat_avg, odi_best_bowling, odi_bowl_avg, odi_catches_stumpings, odi_deliveries, odi_fivefor, odi_matches, odi_runs, odi_tenfor, odi_top_score, odi_wickets, t20_100s_50s, t20_bat_avg, t20_best_bowling, t20_bowl_avg, t20_catches_stumpings, t20_deliveries, t20_fivefor, t20_matches, t20_runs, t20_tenfor, t20_top_score, t20_wickets, test_100s_50s, test_bat_avg, test_best_bowling, test_bowl_avg, test_catches_stumpings, test_deliveries, test_fivefor, test_matches, test_runs, test_tenfor, test_top_score, test_wickets, internationalspan, name, timestamp
+
+Question: How many 100s did Graeme Smith score in FC in 2011?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/23 = 0.0%
+----------------------------------------
+
+--- Question 24/50 ---
+Entity/Table: Andrew_Strauss
+Question: How many 100s did Andrew Strauss score in ODI from 2009 to 2011?
+Expected: 3
+Detected Pattern: 2
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 2: Date Range Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cricketer
+- Data Types: 23 numeric, 26 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Andrew_Strauss" columns: id, fc_100s_50s, fc_bat_avg, fc_best_bowling, fc_bowl_avg, fc_catches_stumpings, fc_deliveries, fc_fivefor, fc_matches, fc_runs, fc_tenfor, fc_top_score, fc_wickets, la_100s_50s, la_bat_avg, la_best_bowling, la_bowl_avg, la_catches_stumpings, la_deliveries, la_fivefor, la_matches, la_runs, la_tenfor, la_top_score, la_wickets, odi_100s_50s, odi_bat_avg, odi_best_bowling, odi_bowl_avg, odi_catches_stumpings, odi_deliveries, odi_fivefor, odi_matches, odi_runs, odi_tenfor, odi_top_score, odi_wickets, test_100s_50s, test_bat_avg, test_best_bowling, test_bowl_avg, test_catches_stumpings, test_deliveries, test_fivefor, test_matches, test_runs, test_tenfor, test_top_score, test_wickets, name, timestamp
+
+Question: How many 100s did Andrew Strauss score in ODI from 2009 to 2011?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/24 = 0.0%
+----------------------------------------
+
+--- Question 25/50 ---
+Entity/Table: Rahul_Dravid
+Question: How many 100s did Rahul Dravid score in Test in 2011?
+Expected: 5
+Detected Pattern: 1
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 1: Single Year Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cricketer
+- Data Types: 31 numeric, 18 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Rahul_Dravid" columns: id, fc_100s_50s, fc_bat_avg, fc_best_bowling, fc_bowl_avg, fc_catches_stumpings, fc_deliveries, fc_fivefor, fc_matches, fc_runs, fc_tenfor, fc_top_score, fc_wickets, la_100s_50s, la_bat_avg, la_best_bowling, la_bowl_avg, la_catches_stumpings, la_deliveries, la_fivefor, la_matches, la_runs, la_tenfor, la_top_score, la_wickets, odi_100s_50s, odi_bat_avg, odi_best_bowling, odi_bowl_avg, odi_catches_stumpings, odi_deliveries, odi_fivefor, odi_matches, odi_runs, odi_tenfor, odi_top_score, odi_wickets, test_100s_50s, test_bat_avg, test_best_bowling, test_bowl_avg, test_catches_stumpings, test_deliveries, test_fivefor, test_matches, test_runs, test_tenfor, test_top_score, test_wickets, name, timestamp
+
+Question: How many 100s did Rahul Dravid score in Test in 2011?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/25 = 0.0%
+----------------------------------------
+
+--- Question 26/50 ---
+Entity/Table: Mohammad_Sami
+Question: How many 50s did Mohammad Sami score in FC in 2016?
+Expected: 3
+Detected Pattern: 1
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 1: Single Year Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cricketer
+- Data Types: 42 numeric, 20 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Mohammad_Sami" columns: id, fc_100s_50s, fc_bat_avg, fc_best_bowling, fc_bowl_avg, fc_catches_stumpings, fc_deliveries, fc_fivefor, fc_matches, fc_runs, fc_tenfor, fc_top_score, fc_wickets, la_100s_50s, la_bat_avg, la_best_bowling, la_bowl_avg, la_catches_stumpings, la_deliveries, la_fivefor, la_matches, la_runs, la_tenfor, la_top_score, la_wickets, odi_100s_50s, odi_bat_avg, odi_best_bowling, odi_bowl_avg, odi_catches_stumpings, odi_deliveries, odi_fivefor, odi_matches, odi_runs, odi_tenfor, odi_top_score, odi_wickets, t20_100s_50s, t20_bat_avg, t20_best_bowling, t20_bowl_avg, t20_catches_stumpings, t20_deliveries, t20_fivefor, t20_matches, t20_runs, t20_tenfor, t20_top_score, t20_wickets, test_100s_50s, test_bat_avg, test_best_bowling, test_bowl_avg, test_catches_stumpings, test_deliveries, test_fivefor, test_matches, test_runs, test_tenfor, test_top_score, test_wickets, internationalspan, name, timestamp
+
+Question: How many 50s did Mohammad Sami score in FC in 2016?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/26 = 0.0%
+----------------------------------------
+
+--- Question 27/50 ---
+Entity/Table: Mark_Boucher
+Question: How many 50s did Mark Boucher score in FC in 2012?
+Expected: 1
+Detected Pattern: 1
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 1: Single Year Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cricketer
+- Data Types: 24 numeric, 23 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Mark_Boucher" columns: id, fc_100s_50s, fc_bat_avg, fc_best_bowling, fc_bowl_avg, fc_catches_stumpings, fc_deliveries, fc_fivefor, fc_matches, fc_runs, fc_tenfor, fc_top_score, fc_wickets, la_100s_50s, la_bat_avg, la_best_bowling, la_bowl_avg, la_catches_stumpings, la_deliveries, la_fivefor, la_matches, la_runs, la_tenfor, la_wickets, odi_100s_50s, odi_bat_avg, odi_best_bowling, odi_bowl_avg, odi_catches_stumpings, odi_deliveries, odi_fivefor, odi_matches, odi_runs, odi_tenfor, odi_wickets, test_100s_50s, test_bat_avg, test_best_bowling, test_bowl_avg, test_catches_stumpings, test_deliveries, test_fivefor, test_matches, test_runs, test_tenfor, test_top_score, test_wickets, name, timestamp
+
+Question: How many 50s did Mark Boucher score in FC in 2012?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/27 = 0.0%
+----------------------------------------
+
+--- Question 28/50 ---
+Entity/Table: Ed_Cowan
+Question: How many 50s did Ed Cowan score in LA from 2012 to 2018?
+Expected: 2
+Detected Pattern: 2
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 2: Date Range Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cricketer
+- Data Types: 23 numeric, 37 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Ed_Cowan" columns: id, col_100s_50s2, fc_100s_50s, fc_bat_avg, fc_best_bowling, fc_bowl_avg, fc_catches_stumpings, fc_deliveries, fc_fivefor, fc_matches, fc_runs, fc_tenfor, fc_top_score, fc_wickets, la_100s_50s, la_bat_avg, la_best_bowling, la_bowl_avg, la_catches_stumpings, la_deliveries, la_fivefor, la_matches, la_runs, la_tenfor, la_wickets, t20_100s_50s, t20_bat_avg, t20_best_bowling, t20_bowl_avg, t20_catches_stumpings, t20_deliveries, t20_fivefor, t20_matches, t20_runs, t20_tenfor, t20_top_score, t20_wickets, test_100s_50s, test_bat_avg, test_best_bowling, test_bowl_avg, test_catches_stumpings, test_deliveries, test_fivefor, test_matches, test_runs, test_tenfor, test_top_score, test_wickets, bat_avg2, best_bowling2, bowl_avg2, catches_stumpings2, deliveries2, fivefor2, matches2, name, runs2, tenfor2, timestamp, top_score2, wickets2
+
+Question: How many 50s did Ed Cowan score in LA from 2012 to 2018?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/28 = 0.0%
+----------------------------------------
+
+--- Question 29/50 ---
+Entity/Table: Jason_Gillespie
+Question: How many matches did Jason Gillespie played in FC in 2008?
+Expected: 17
+Detected Pattern: 1
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 1: Single Year Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cricketer
+- Data Types: 31 numeric, 15 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Jason_Gillespie" columns: id, fc_100s_50s, fc_bat_avg, fc_best_bowling, fc_bowl_avg, fc_catches_stumpings, fc_deliveries, fc_fivefor, fc_matches, fc_runs, fc_tenfor, fc_wickets, la_100s_50s, la_bat_avg, la_best_bowling, la_bowl_avg, la_catches_stumpings, la_deliveries, la_fivefor, la_matches, la_runs, la_tenfor, la_wickets, odi_100s_50s, odi_bat_avg, odi_best_bowling, odi_bowl_avg, odi_catches_stumpings, odi_deliveries, odi_fivefor, odi_matches, odi_runs, odi_tenfor, odi_wickets, test_100s_50s, test_bat_avg, test_best_bowling, test_bowl_avg, test_catches_stumpings, test_deliveries, test_fivefor, test_matches, test_runs, test_tenfor, test_wickets, internationalspan, name, timestamp
+
+Question: How many matches did Jason Gillespie played in FC in 2008?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/29 = 0.0%
+----------------------------------------
+
+--- Question 30/50 ---
+Entity/Table: Mark_Boucher
+Question: How many 50s did Mark Boucher score in FC from 2009 to 2017?
+Expected: 5
+Detected Pattern: 2
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 2: Date Range Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cricketer
+- Data Types: 24 numeric, 23 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Mark_Boucher" columns: id, fc_100s_50s, fc_bat_avg, fc_best_bowling, fc_bowl_avg, fc_catches_stumpings, fc_deliveries, fc_fivefor, fc_matches, fc_runs, fc_tenfor, fc_top_score, fc_wickets, la_100s_50s, la_bat_avg, la_best_bowling, la_bowl_avg, la_catches_stumpings, la_deliveries, la_fivefor, la_matches, la_runs, la_tenfor, la_wickets, odi_100s_50s, odi_bat_avg, odi_best_bowling, odi_bowl_avg, odi_catches_stumpings, odi_deliveries, odi_fivefor, odi_matches, odi_runs, odi_tenfor, odi_wickets, test_100s_50s, test_bat_avg, test_best_bowling, test_bowl_avg, test_catches_stumpings, test_deliveries, test_fivefor, test_matches, test_runs, test_tenfor, test_top_score, test_wickets, name, timestamp
+
+Question: How many 50s did Mark Boucher score in FC from 2009 to 2017?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/30 = 0.0%
+----------------------------------------
+
+--- Question 31/50 ---
+Entity/Table: Tino_Best
+Question: How many 50s did Tino Best score in Test from 2010 to 2014?
+Expected: 1
+Detected Pattern: 2
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 2: Date Range Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cricketer
+- Data Types: 40 numeric, 21 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Tino_Best" columns: id, fc_100s_50s, fc_bat_avg, fc_best_bowling, fc_bowl_avg, fc_catches_stumpings, fc_deliveries, fc_fivefor, fc_matches, fc_runs, fc_tenfor, fc_top_score, fc_wickets, la_100s_50s, la_bat_avg, la_best_bowling, la_bowl_avg, la_catches_stumpings, la_deliveries, la_fivefor, la_matches, la_runs, la_tenfor, la_top_score, la_wickets, odi_100s_50s, odi_bat_avg, odi_best_bowling, odi_bowl_avg, odi_catches_stumpings, odi_deliveries, odi_fivefor, odi_matches, odi_runs, odi_tenfor, odi_top_score, odi_wickets, t20_100s_50s, t20_bat_avg, t20_best_bowling, t20_bowl_avg, t20_catches_stumpings, t20_deliveries, t20_fivefor, t20_matches, t20_runs, t20_tenfor, t20_wickets, test_100s_50s, test_bat_avg, test_best_bowling, test_bowl_avg, test_catches_stumpings, test_deliveries, test_fivefor, test_matches, test_runs, test_tenfor, test_top_score, test_wickets, internationalspan, name, timestamp
+
+Question: How many 50s did Tino Best score in Test from 2010 to 2014?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/31 = 0.0%
+----------------------------------------
+
+--- Question 32/50 ---
+Entity/Table: Kevin_Pietersen
+Question: How many matches did Kevin Pietersen played in FC in 2010?
+Expected: 9
+Detected Pattern: 1
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 1: Single Year Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cricketer
+- Data Types: 25 numeric, 11 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Kevin_Pietersen" columns: id, fc_100s_50s, fc_bat_avg, fc_best_bowling, fc_bowl_avg, fc_catches_stumpings, fc_deliveries, fc_fivefor, fc_matches, fc_runs, fc_tenfor, fc_wickets, odi_100s_50s, odi_bat_avg, odi_best_bowling, odi_bowl_avg, odi_catches_stumpings, odi_deliveries, odi_fivefor, odi_matches, odi_runs, odi_tenfor, odi_top_score, odi_wickets, test_100s_50s, test_bat_avg, test_best_bowling, test_bowl_avg, test_catches_stumpings, test_deliveries, test_fivefor, test_matches, test_runs, test_tenfor, test_top_score, test_wickets, name, timestamp
+
+Question: How many matches did Kevin Pietersen played in FC in 2010?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/32 = 0.0%
+----------------------------------------
+
+--- Question 33/50 ---
+Entity/Table: Herschelle_Gibbs
+Question: How many 50s did Herschelle Gibbs score in LA in 2009?
+Expected: 2
+Detected Pattern: 1
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 1: Single Year Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cricketer
+- Data Types: 25 numeric, 13 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Herschelle_Gibbs" columns: id, fc_100s_50s, fc_bat_avg, fc_best_bowling, fc_bowl_avg, fc_catches_stumpings, fc_deliveries, fc_fivefor, fc_matches, fc_runs, fc_tenfor, fc_top_score, fc_wickets, la_100s_50s, la_bat_avg, la_best_bowling, la_bowl_avg, la_catches_stumpings, la_deliveries, la_fivefor, la_matches, la_runs, la_tenfor, la_top_score, la_wickets, test_100s_50s, test_bat_avg, test_best_bowling, test_bowl_avg, test_catches_stumpings, test_deliveries, test_fivefor, test_matches, test_runs, test_tenfor, test_top_score, test_wickets, name, timestamp, year5
+
+Question: How many 50s did Herschelle Gibbs score in LA in 2009?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/33 = 0.0%
+----------------------------------------
+
+--- Question 34/50 ---
+Entity/Table: Umar_Gul
+Question: How many runs did Umar Gul scored in ODI in 2017?
+Expected: 43
+Detected Pattern: 1
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 1: Single Year Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cricketer
+- Data Types: 33 numeric, 17 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Umar_Gul" columns: id, fc_100s_50s, fc_bat_avg, fc_best_bowling, fc_bowl_avg, fc_catches_stumpings, fc_deliveries, fc_fivefor, fc_matches, fc_runs, fc_tenfor, fc_top_score, fc_wickets, la_100s_50s, la_bat_avg, la_best_bowling, la_bowl_avg, la_catches_stumpings, la_deliveries, la_fivefor, la_matches, la_runs, la_tenfor, la_top_score, la_wickets, odi_100s_50s, odi_bat_avg, odi_best_bowling, odi_bowl_avg, odi_catches_stumpings, odi_deliveries, odi_fivefor, odi_matches, odi_runs, odi_tenfor, odi_top_score, odi_wickets, test_100s_50s, test_bat_avg, test_best_bowling, test_bowl_avg, test_catches_stumpings, test_deliveries, test_fivefor, test_matches, test_runs, test_tenfor, test_top_score, test_wickets, internationalspan, name, timestamp
+
+Question: How many runs did Umar Gul scored in ODI in 2017?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/34 = 0.0%
+----------------------------------------
+
+--- Question 35/50 ---
+Entity/Table: Andrew_Strauss
+Question: How many matches did Andrew Strauss played in Tests and ODIs combined from 2009 to 2012?
+Expected: 59
+Detected Pattern: 2
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 2: Date Range Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cricketer
+- Data Types: 23 numeric, 26 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Andrew_Strauss" columns: id, fc_100s_50s, fc_bat_avg, fc_best_bowling, fc_bowl_avg, fc_catches_stumpings, fc_deliveries, fc_fivefor, fc_matches, fc_runs, fc_tenfor, fc_top_score, fc_wickets, la_100s_50s, la_bat_avg, la_best_bowling, la_bowl_avg, la_catches_stumpings, la_deliveries, la_fivefor, la_matches, la_runs, la_tenfor, la_top_score, la_wickets, odi_100s_50s, odi_bat_avg, odi_best_bowling, odi_bowl_avg, odi_catches_stumpings, odi_deliveries, odi_fivefor, odi_matches, odi_runs, odi_tenfor, odi_top_score, odi_wickets, test_100s_50s, test_bat_avg, test_best_bowling, test_bowl_avg, test_catches_stumpings, test_deliveries, test_fivefor, test_matches, test_runs, test_tenfor, test_top_score, test_wickets, name, timestamp
+
+Question: How many matches did Andrew Strauss played in Tests and ODIs combined from 2009 to 2012?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/35 = 0.0%
+----------------------------------------
+
+--- Question 36/50 ---
+Entity/Table: Harbhajan_Singh
+Question: How many 50s did Harbhajan Singh score in FC from 2008 to 2012?
+Expected: 3
+Detected Pattern: 2
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 2: Date Range Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cricketer
+- Data Types: 19 numeric, 6 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Harbhajan_Singh" columns: id, fc_100s_50s, fc_bat_avg, fc_best_bowling, fc_bowl_avg, fc_catches_stumpings, fc_deliveries, fc_fivefor, fc_matches, fc_runs, fc_tenfor, fc_top_score, fc_wickets, test_100s_50s, test_bat_avg, test_best_bowling, test_bowl_avg, test_catches_stumpings, test_deliveries, test_fivefor, test_matches, test_runs, test_tenfor, test_top_score, test_wickets, name, timestamp
+
+Question: How many 50s did Harbhajan Singh score in FC from 2008 to 2012?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/36 = 0.0%
+----------------------------------------
+
+--- Question 37/50 ---
+Entity/Table: Ed_Cowan
+Question: How many runs did Ed Cowan scored in T20 in 2012?
+Expected: 74
+Detected Pattern: 1
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 1: Single Year Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cricketer
+- Data Types: 23 numeric, 37 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Ed_Cowan" columns: id, col_100s_50s2, fc_100s_50s, fc_bat_avg, fc_best_bowling, fc_bowl_avg, fc_catches_stumpings, fc_deliveries, fc_fivefor, fc_matches, fc_runs, fc_tenfor, fc_top_score, fc_wickets, la_100s_50s, la_bat_avg, la_best_bowling, la_bowl_avg, la_catches_stumpings, la_deliveries, la_fivefor, la_matches, la_runs, la_tenfor, la_wickets, t20_100s_50s, t20_bat_avg, t20_best_bowling, t20_bowl_avg, t20_catches_stumpings, t20_deliveries, t20_fivefor, t20_matches, t20_runs, t20_tenfor, t20_top_score, t20_wickets, test_100s_50s, test_bat_avg, test_best_bowling, test_bowl_avg, test_catches_stumpings, test_deliveries, test_fivefor, test_matches, test_runs, test_tenfor, test_top_score, test_wickets, bat_avg2, best_bowling2, bowl_avg2, catches_stumpings2, deliveries2, fivefor2, matches2, name, runs2, tenfor2, timestamp, top_score2, wickets2
+
+Question: How many runs did Ed Cowan scored in T20 in 2012?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/37 = 0.0%
+----------------------------------------
+
+--- Question 38/50 ---
+Entity/Table: VVS_Laxman
+Question: How many matches did VVS Laxman played in Tests and ODIs combined from 2009 to 2012?
+Expected: 24
+Detected Pattern: 2
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 2: Date Range Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cricketer
+- Data Types: 32 numeric, 17 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "VVS_Laxman" columns: id, fc_100s_50s, fc_bat_avg, fc_best_bowling, fc_bowl_avg, fc_catches_stumpings, fc_deliveries, fc_fivefor, fc_matches, fc_runs, fc_tenfor, fc_top_score, fc_wickets, la_100s_50s, la_bat_avg, la_best_bowling, la_bowl_avg, la_catches_stumpings, la_deliveries, la_fivefor, la_matches, la_runs, la_tenfor, la_top_score, la_wickets, odi_100s_50s, odi_bat_avg, odi_best_bowling, odi_bowl_avg, odi_catches_stumpings, odi_deliveries, odi_fivefor, odi_matches, odi_runs, odi_tenfor, odi_top_score, odi_wickets, test_100s_50s, test_bat_avg, test_best_bowling, test_bowl_avg, test_catches_stumpings, test_deliveries, test_fivefor, test_matches, test_runs, test_tenfor, test_top_score, test_wickets, name, timestamp
+
+Question: How many matches did VVS Laxman played in Tests and ODIs combined from 2009 to 2012?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/38 = 0.0%
+----------------------------------------
+
+--- Question 39/50 ---
+Entity/Table: Parthiv_Patel
+Question: How many 50s did Parthiv Patel score in Test from 2012 to 2020?
+Expected: 2
+Detected Pattern: 2
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 2: Date Range Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cricketer
+- Data Types: 20 numeric, 30 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Parthiv_Patel" columns: id, fc_100s_50s, fc_bat_avg, fc_best_bowling, fc_bowl_avg, fc_catches_stumpings, fc_deliveries, fc_fivefor, fc_matches, fc_runs, fc_tenfor, fc_top_score, fc_wickets, odi_100s_50s, odi_bat_avg, odi_best_bowling, odi_bowl_avg, odi_catches_stumpings, odi_deliveries, odi_fivefor, odi_matches, odi_runs, odi_tenfor, odi_top_score, odi_wickets, t20_100s_50s, t20_bat_avg, t20_best_bowling, t20_bowl_avg, t20_catches_stumpings, t20_deliveries, t20_fivefor, t20_matches, t20_runs, t20_tenfor, t20_top_score, t20_wickets, test_100s_50s, test_bat_avg, test_best_bowling, test_bowl_avg, test_catches_stumpings, test_deliveries, test_fivefor, test_matches, test_runs, test_tenfor, test_top_score, test_wickets, internationalspan, name, timestamp
+
+Question: How many 50s did Parthiv Patel score in Test from 2012 to 2020?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/39 = 0.0%
+----------------------------------------
+
+--- Question 40/50 ---
+Entity/Table: Michael_Clarke_(cricketer)
+Question: How many fivefor did Michael Clarke took in Tests and ODIs combined from 2010 to 2012?
+Expected: 1
+Detected Pattern: 2
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 2: Date Range Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cricketer
+- Data Types: 24 numeric, 12 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Michael_Clarke_(cricketer)" columns: id, fc_100s_50s, fc_bat_avg, fc_best_bowling, fc_bowl_avg, fc_catches_stumpings, fc_deliveries, fc_fivefor, fc_matches, fc_runs, fc_tenfor, fc_wickets, odi_100s_50s, odi_bat_avg, odi_best_bowling, odi_bowl_avg, odi_catches_stumpings, odi_deliveries, odi_fivefor, odi_matches, odi_runs, odi_tenfor, odi_top_score, odi_wickets, test_100s_50s, test_bat_avg, test_best_bowling, test_bowl_avg, test_catches_stumpings, test_deliveries, test_fivefor, test_matches, test_runs, test_tenfor, test_top_score, test_wickets, name, timestamp
+
+Question: How many fivefor did Michael Clarke took in Tests and ODIs combined from 2010 to 2012?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/40 = 0.0%
+----------------------------------------
+
+--- Question 41/50 ---
+Entity/Table: Makhaya_Ntini
+Question: How many wickets did Makhaya Ntini took in FC in 2009?
+Expected: 29
+Detected Pattern: 1
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 1: Single Year Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cricketer
+- Data Types: 30 numeric, 15 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Makhaya_Ntini" columns: id, fc_100s_50s, fc_bat_avg, fc_best_bowling, fc_bowl_avg, fc_catches_stumpings, fc_deliveries, fc_fivefor, fc_matches, fc_runs, fc_tenfor, fc_wickets, la_100s_50s, la_bat_avg, la_best_bowling, la_bowl_avg, la_catches_stumpings, la_deliveries, la_fivefor, la_matches, la_runs, la_tenfor, la_wickets, odi_100s_50s, odi_bat_avg, odi_best_bowling, odi_bowl_avg, odi_catches_stumpings, odi_deliveries, odi_fivefor, odi_matches, odi_runs, odi_tenfor, odi_wickets, test_100s_50s, test_bat_avg, test_best_bowling, test_bowl_avg, test_catches_stumpings, test_deliveries, test_fivefor, test_matches, test_runs, test_tenfor, test_wickets, name, timestamp
+
+Question: How many wickets did Makhaya Ntini took in FC in 2009?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/41 = 0.0%
+----------------------------------------
+
+--- Question 42/50 ---
+Entity/Table: Shahid_Afridi
+Question: How many fivefor did Shahid Afridi took in Tests and ODIs combined from 2008 to 2010?
+Expected: 1
+Detected Pattern: 2
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 2: Date Range Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cricketer
+- Data Types: 33 numeric, 16 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Shahid_Afridi" columns: id, fc_100s_50s, fc_bat_avg, fc_best_bowling, fc_bowl_avg, fc_catches_stumpings, fc_deliveries, fc_fivefor, fc_matches, fc_runs, fc_tenfor, fc_top_score, fc_wickets, la_100s_50s, la_bat_avg, la_best_bowling, la_bowl_avg, la_catches_stumpings, la_deliveries, la_fivefor, la_matches, la_runs, la_tenfor, la_top_score, la_wickets, odi_100s_50s, odi_bat_avg, odi_best_bowling, odi_bowl_avg, odi_catches_stumpings, odi_deliveries, odi_fivefor, odi_matches, odi_runs, odi_tenfor, odi_top_score, odi_wickets, test_100s_50s, test_bat_avg, test_best_bowling, test_bowl_avg, test_catches_stumpings, test_deliveries, test_fivefor, test_matches, test_runs, test_tenfor, test_top_score, test_wickets, name, timestamp
+
+Question: How many fivefor did Shahid Afridi took in Tests and ODIs combined from 2008 to 2010?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/42 = 0.0%
+----------------------------------------
+
+--- Question 43/50 ---
+Entity/Table: Ed_Cowan
+Question: How many 50s did Ed Cowan score in T20 in 2012?
+Expected: 1
+Detected Pattern: 1
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 1: Single Year Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cricketer
+- Data Types: 23 numeric, 37 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Ed_Cowan" columns: id, col_100s_50s2, fc_100s_50s, fc_bat_avg, fc_best_bowling, fc_bowl_avg, fc_catches_stumpings, fc_deliveries, fc_fivefor, fc_matches, fc_runs, fc_tenfor, fc_top_score, fc_wickets, la_100s_50s, la_bat_avg, la_best_bowling, la_bowl_avg, la_catches_stumpings, la_deliveries, la_fivefor, la_matches, la_runs, la_tenfor, la_wickets, t20_100s_50s, t20_bat_avg, t20_best_bowling, t20_bowl_avg, t20_catches_stumpings, t20_deliveries, t20_fivefor, t20_matches, t20_runs, t20_tenfor, t20_top_score, t20_wickets, test_100s_50s, test_bat_avg, test_best_bowling, test_bowl_avg, test_catches_stumpings, test_deliveries, test_fivefor, test_matches, test_runs, test_tenfor, test_top_score, test_wickets, bat_avg2, best_bowling2, bowl_avg2, catches_stumpings2, deliveries2, fivefor2, matches2, name, runs2, tenfor2, timestamp, top_score2, wickets2
+
+Question: How many 50s did Ed Cowan score in T20 in 2012?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/43 = 0.0%
+----------------------------------------
+
+--- Question 44/50 ---
+Entity/Table: Makhaya_Ntini
+Question: How many runs did Makhaya Ntini scored in LA in 2009?
+Expected: 19
+Detected Pattern: 1
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 1: Single Year Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cricketer
+- Data Types: 30 numeric, 15 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Makhaya_Ntini" columns: id, fc_100s_50s, fc_bat_avg, fc_best_bowling, fc_bowl_avg, fc_catches_stumpings, fc_deliveries, fc_fivefor, fc_matches, fc_runs, fc_tenfor, fc_wickets, la_100s_50s, la_bat_avg, la_best_bowling, la_bowl_avg, la_catches_stumpings, la_deliveries, la_fivefor, la_matches, la_runs, la_tenfor, la_wickets, odi_100s_50s, odi_bat_avg, odi_best_bowling, odi_bowl_avg, odi_catches_stumpings, odi_deliveries, odi_fivefor, odi_matches, odi_runs, odi_tenfor, odi_wickets, test_100s_50s, test_bat_avg, test_best_bowling, test_bowl_avg, test_catches_stumpings, test_deliveries, test_fivefor, test_matches, test_runs, test_tenfor, test_wickets, name, timestamp
+
+Question: How many runs did Makhaya Ntini scored in LA in 2009?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/44 = 0.0%
+----------------------------------------
+
+--- Question 45/50 ---
+Entity/Table: Kumar_Sangakkara
+Question: How many 50s did Kumar Sangakkara score in ODI in 2009?
+Expected: 7
+Detected Pattern: 1
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 1: Single Year Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cricketer
+- Data Types: 23 numeric, 24 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Kumar_Sangakkara" columns: id, fc_100s_50s, fc_bat_avg, fc_best_bowling, fc_bowl_avg, fc_catches_stumpings, fc_deliveries, fc_fivefor, fc_matches, fc_runs, fc_tenfor, fc_top_score, fc_wickets, la_100s_50s, la_bat_avg, la_best_bowling, la_bowl_avg, la_catches_stumpings, la_deliveries, la_fivefor, la_matches, la_runs, la_tenfor, la_wickets, odi_100s_50s, odi_bat_avg, odi_best_bowling, odi_bowl_avg, odi_catches_stumpings, odi_deliveries, odi_fivefor, odi_matches, odi_runs, odi_tenfor, odi_wickets, test_100s_50s, test_bat_avg, test_best_bowling, test_bowl_avg, test_catches_stumpings, test_deliveries, test_fivefor, test_matches, test_runs, test_tenfor, test_top_score, test_wickets, name, timestamp
+
+Question: How many 50s did Kumar Sangakkara score in ODI in 2009?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/45 = 0.0%
+----------------------------------------
+
+--- Question 46/50 ---
+Entity/Table: VVS_Laxman
+Question: How many 50s did VVS Laxman score in LA from 2007 to 2012?
+Expected: 1
+Detected Pattern: 2
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 2: Date Range Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cricketer
+- Data Types: 32 numeric, 17 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "VVS_Laxman" columns: id, fc_100s_50s, fc_bat_avg, fc_best_bowling, fc_bowl_avg, fc_catches_stumpings, fc_deliveries, fc_fivefor, fc_matches, fc_runs, fc_tenfor, fc_top_score, fc_wickets, la_100s_50s, la_bat_avg, la_best_bowling, la_bowl_avg, la_catches_stumpings, la_deliveries, la_fivefor, la_matches, la_runs, la_tenfor, la_top_score, la_wickets, odi_100s_50s, odi_bat_avg, odi_best_bowling, odi_bowl_avg, odi_catches_stumpings, odi_deliveries, odi_fivefor, odi_matches, odi_runs, odi_tenfor, odi_top_score, odi_wickets, test_100s_50s, test_bat_avg, test_best_bowling, test_bowl_avg, test_catches_stumpings, test_deliveries, test_fivefor, test_matches, test_runs, test_tenfor, test_top_score, test_wickets, name, timestamp
+
+Question: How many 50s did VVS Laxman score in LA from 2007 to 2012?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/46 = 0.0%
+----------------------------------------
+
+--- Question 47/50 ---
+Entity/Table: Irfan_Pathan
+Question: How many matches did Irfan Pathan played in Tests and ODIs combined from 2008 to 2011?
+Expected: 2
+Detected Pattern: 2
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 2: Date Range Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cricketer
+- Data Types: 26 numeric, 11 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Irfan_Pathan" columns: id, fc_100s_50s, fc_bat_avg, fc_best_bowling, fc_bowl_avg, fc_catches_stumpings, fc_deliveries, fc_fivefor, fc_matches, fc_runs, fc_tenfor, fc_top_score, fc_wickets, odi_100s_50s, odi_bat_avg, odi_best_bowling, odi_bowl_avg, odi_catches_stumpings, odi_deliveries, odi_fivefor, odi_matches, odi_runs, odi_tenfor, odi_top_score, odi_wickets, test_100s_50s, test_bat_avg, test_best_bowling, test_bowl_avg, test_catches_stumpings, test_deliveries, test_fivefor, test_matches, test_runs, test_tenfor, test_top_score, test_wickets, name, timestamp
+
+Question: How many matches did Irfan Pathan played in Tests and ODIs combined from 2008 to 2011?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/47 = 0.0%
+----------------------------------------
+
+--- Question 48/50 ---
+Entity/Table: Kevin_Pietersen
+Question: How many 50s did Kevin Pietersen score in FC in 2010?
+Expected: 3
+Detected Pattern: 1
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 1: Single Year Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cricketer
+- Data Types: 25 numeric, 11 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Kevin_Pietersen" columns: id, fc_100s_50s, fc_bat_avg, fc_best_bowling, fc_bowl_avg, fc_catches_stumpings, fc_deliveries, fc_fivefor, fc_matches, fc_runs, fc_tenfor, fc_wickets, odi_100s_50s, odi_bat_avg, odi_best_bowling, odi_bowl_avg, odi_catches_stumpings, odi_deliveries, odi_fivefor, odi_matches, odi_runs, odi_tenfor, odi_top_score, odi_wickets, test_100s_50s, test_bat_avg, test_best_bowling, test_bowl_avg, test_catches_stumpings, test_deliveries, test_fivefor, test_matches, test_runs, test_tenfor, test_top_score, test_wickets, name, timestamp
+
+Question: How many 50s did Kevin Pietersen score in FC in 2010?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/48 = 0.0%
+----------------------------------------
+
+--- Question 49/50 ---
+Entity/Table: Nuwan_Kulasekara
+Question: How many 50s did Nuwan Kulasekara score in FC in 2014?
+Expected: 1
+Detected Pattern: 1
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 1: Single Year Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cricketer
+- Data Types: 33 numeric, 17 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Nuwan_Kulasekara" columns: id, fc_100s_50s, fc_bat_avg, fc_best_bowling, fc_bowl_avg, fc_catches_stumpings, fc_deliveries, fc_fivefor, fc_matches, fc_runs, fc_tenfor, fc_top_score, fc_wickets, odi_100s_50s, odi_bat_avg, odi_best_bowling, odi_bowl_avg, odi_catches_stumpings, odi_deliveries, odi_fivefor, odi_matches, odi_runs, odi_tenfor, odi_top_score, odi_wickets, t20_100s_50s, t20_bat_avg, t20_best_bowling, t20_bowl_avg, t20_catches_stumpings, t20_deliveries, t20_fivefor, t20_matches, t20_runs, t20_tenfor, t20_top_score, t20_wickets, test_100s_50s, test_bat_avg, test_best_bowling, test_bowl_avg, test_catches_stumpings, test_deliveries, test_fivefor, test_matches, test_runs, test_tenfor, test_top_score, test_wickets, internationalspan, name, timestamp
+
+Question: How many 50s did Nuwan Kulasekara score in FC in 2014?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/49 = 0.0%
+----------------------------------------
+
+--- Question 50/50 ---
+Entity/Table: Alok_Kapali
+Question: How many 50s did Alok Kapali score in FC from 2011 to 2017?
+Expected: 4
+Detected Pattern: 2
+Prompt: UNIVERSAL TEMPORAL REASONING (Accepts data as-is):
+
+PATTERN 2: Date Range Single Metric
+
+DOMAIN ANALYSIS:
+- Domain Type: cricketer
+- Data Types: 41 numeric, 20 text, 0 currency
+- Has Timestamp: True
+
+UNIVERSAL RULES:
+1. ALWAYS accept data in whatever format it exists - do NOT force conversions
+2. Use strftime('%Y', timestamp) to extract year from timestamp
+3. For comparisons, use CAST() with REPLACE() to handle $, %, million, billion, trillion
+4. For text values (like 'increase', 'decrease'), return them as-is
+5. For multiple year answers, return all relevant years
+6. For percentages, handle % symbol in calculations
+7. For currency, handle $, million, billion, trillion in calculations
+8. Never try to convert text to numbers unless the text is clearly numeric
+
+CRITICAL FIXES FOR COMMON ERRORS:
+9. RATIO CALCULATIONS: For "ratio" questions, parse "X/Y" format using SUBSTR and INSTR with '/' separator
+10. RANKING FORMATS: Strip ordinal suffixes (st, nd, rd, th) from rankings using REPLACE() before CAST to INTEGER
+11. CUMULATIVE DATA: For "how many X between Y1 and Y2" questions, calculate (MAX(end_year) - MAX(before_start_year))
+12. MULTIPLE ANSWERS: Use DISTINCT when question asks for "person(s)" or multiple entities
+
+DATA HANDLING EXAMPLES:
+- "6.1%" stays as "6.1%" - don't convert to 0.061
+- "decrease" stays as "decrease" - don't convert to number
+- "$272 million" becomes 272000000 in calculations but stays as "$272 million" in results
+- "2019, 2020" can be returned as "2019 2020" or "2019, 2020"
+
+SPECIFIC FIX EXAMPLES:
+- Ratio: SELECT CAST(SUBSTR(column_name, 1, INSTR(column_name, '/') - 1) AS REAL) / NULLIF(CAST(SUBSTR(column_name, INSTR(column_name, '/') + 1, INSTR(column_name, ' ') - INSTR(column_name, '/') - 1) AS REAL), 0)
+- Ranking: SELECT CAST(REPLACE(REPLACE(REPLACE(REPLACE(rank_column, 'st', ''), 'nd', ''), 'rd', ''), 'th', '') AS INTEGER)
+- Cumulative: SELECT (MAX(CASE WHEN strftime('%Y', timestamp) = 'end_year' THEN CAST(numeric_column AS INTEGER) END) - MAX(CASE WHEN strftime('%Y', timestamp) < 'start_year' THEN CAST(numeric_column AS INTEGER) END))
+- Multiple: SELECT DISTINCT person_column FROM table WHERE condition
+
+Table "Alok_Kapali" columns: id, fc_100s_50s, fc_bat_avg, fc_best_bowling, fc_bowl_avg, fc_catches_stumpings, fc_deliveries, fc_fivefor, fc_matches, fc_runs, fc_tenfor, fc_top_score, fc_wickets, la_100s_50s, la_bat_avg, la_best_bowling, la_bowl_avg, la_catches_stumpings, la_deliveries, la_fivefor, la_matches, la_runs, la_tenfor, la_top_score, la_wickets, odi_100s_50s, odi_bat_avg, odi_best_bowling, odi_bowl_avg, odi_catches_stumpings, odi_deliveries, odi_fivefor, odi_matches, odi_runs, odi_tenfor, odi_top_score, odi_wickets, t20_100s_50s, t20_bat_avg, t20_best_bowling, t20_bowl_avg, t20_catches_stumpings, t20_deliveries, t20_fivefor, t20_matches, t20_runs, t20_tenfor, t20_top_score, t20_wickets, test_100s_50s, test_bat_avg, test_best_bowling, test_bowl_avg, test_catches_stumpings, test_deliveries, test_fivefor, test_matches, test_runs, test_tenfor, test_top_score, test_wickets, name, timestamp
+
+Question: How many 50s did Alok Kapali score in FC from 2011 to 2017?
+
+Write SQLite SQL that accepts data as-is. Return only the SQL statement ending with semicolon.
+Rate limited with key1, trying next...
+Rate limited with key2, trying next...
+Rate limited with key3, trying next...
+Generated SQL: SELECT NULL
+Cleaned SQL: SELECT NULL
+Answer: 
+Result: ❌
+Current Score: 0/50 = 0.0%
+----------------------------------------
+
+🎯 FINAL ACCURACY: 0/50 = 0.0%
