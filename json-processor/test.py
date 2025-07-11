@@ -3,24 +3,7 @@ DB_DIR  = "/content/json-processor/domain_dbs"
 CSV     = "/content/json-processor/question-answer.csv"
 DOMAIN  = "table_tennis_player"          # change domain here
 N_Q     = 10  # Reduced for faster testing
-GEMINI_API_KEYS = {
-    "key1": "AIzaSyDjjyUfrII_gJrt6YXzXFtnW4t4SkEAGl0",
-    "key2": "AIzaSyCeKW8bcpxuvgknB21ejbqP7OGx9ttjmsM",
-    "key3": "AIzaSyAN-4WcM6KV-3DcVRttZpl6RssTHEHgR3A",
-    "key4": "AIzaSyAQzc8HG3POyQRLbtaGxE961tzIHPiG06A",
-    "key5": "AIzaSyApguGDe_9nCDbmAHMjjFN-1gJbUHRfxPM",
-    "key6": "AIzaSyATy5JJPaBojYbaiO9P4AnZZzA8dN-Smek",
-    "key7": "AIzaSyAEXVJoU-SQwaTRi3ps2HKD31Kcgu-7i0s",
-    "key8": "AIzaSyBTpOkcGT8nKmibFph3BW6e1F52VVc0FIs",
-    "key9": "AIzaSyCb0rUd_aF0RzcbUBBJDX9wNNuN5GCnKGw",
-    "key10": "AIzaSyDWDtyTz4kkpmY-sduZEJH40HDuwNFDxz8",
-    "key11": "AIzaSyAwj0wf7-OxC0rbGjOVboUFQEVGbeJXcic",
-    "key12": "AIzaSyDExBpgkdvvtWJgSsCsHYxVd7pWLwsQPtQ",
-    "key13": "AIzaSyA2NLBXS0Z6jfxxIN6b8cPTbLrblG17fwU",
-    "key14": "AIzaSyCGp3xrbvU2GlED1pA15Ht0gpaURddjZOU",
-    "key15": "AIzaSyCVuAesbh3JUiPj8fNOoSK5HcsHiBWPgtM",
 
-}
 
 MODEL   = "gemini-2.0-flash"  # Try the more common model name
 API_VER = "v1beta"
